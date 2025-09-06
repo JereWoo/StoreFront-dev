@@ -26,8 +26,6 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-// import { MantineLogo } from '@mantinex/mantine-logo';
-// import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from "../../css/HeaderMegaMenu.module.css";
 
 const mockdata = [
@@ -91,8 +89,12 @@ export function HeaderMegaMenu() {
     <Box pb={120}>
       <header className={classes.header}>
         <Group justify="space-between" h="100%">
-          <img src="/NEB-Logo.png" alt="My Logo" className="h-14 w-auto" />
-          <>Not Enough Books</>
+          <Group>
+            <img src="/NEB-Logo.png" alt="My Logo" className="h-14 w-auto" />
+            <Text fw={700} size="xl">
+              Not Enough Books
+            </Text>
+          </Group>
 
           <Group h="100%" gap={0} visibleFrom="sm">
             <a href="#" className={classes.link}>

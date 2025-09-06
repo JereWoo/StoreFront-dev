@@ -1,30 +1,34 @@
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
-import { Link, Outlet, createRootRoute } from "@tanstack/react-router";
+import { Outlet, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
-import { HeaderMegaMenu } from "@/components/mantine/header.tsx";
+import { HeaderMegaMenu } from "@/components/mantine/header";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+// Create a single query client for the whole app
+const queryClient = new QueryClient();
 
 function RootLayout() {
   return (
     <MantineProvider>
-      {/* Root wrapper for styling isolation & theme */}
-      <HeaderMegaMenu />
-      <div className="root min-h-screen flex flex-col">
-        {/* This is where your pages will render */}
-        <main className="flex-1">
-          <Outlet />
-        </main>
+      <QueryClientProvider client={queryClient}>
+        <div className="root min-h-screen flex flex-col">
+          {/* Header at the top */}
+          <HeaderMegaMenu />
 
-        {/* Devtools */}
-        <TanStackRouterDevtools />
-      </div>
+          {/* Page content */}
+          <main className="flex-1">
+            <Outlet />
+          </main>
+
+          {/* Devtools */}
+          <TanStackRouterDevtools />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </div>
+      </QueryClientProvider>
     </MantineProvider>
   );
 }

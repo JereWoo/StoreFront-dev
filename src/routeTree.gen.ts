@@ -8,117 +8,153 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
 
-import { Route as rootRouteImport } from "./routes/__root";
-import { Route as SignInRouteImport } from "./routes/sign-in";
-import { Route as DemoRouteImport } from "./routes/demo";
-import { Route as BadgecardRouteImport } from "./routes/badgecard";
-import { Route as PokemonIndexRouteImport } from "./routes/pokemon/index";
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProductstestpageRouteImport } from './routes/productstestpage'
+import { Route as DemoRouteImport } from './routes/demo'
+import { Route as BadgecardRouteImport } from './routes/badgecard'
+import { Route as PokemonIndexRouteImport } from './routes/pokemon/index'
+import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
 
-const IndexLazyRouteImport = createFileRoute("/")();
+const IndexLazyRouteImport = createFileRoute('/')()
 
-const SignInRoute = SignInRouteImport.update({
-  id: "/sign-in",
-  path: "/sign-in",
+const ProductstestpageRoute = ProductstestpageRouteImport.update({
+  id: '/productstestpage',
+  path: '/productstestpage',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const DemoRoute = DemoRouteImport.update({
-  id: "/demo",
-  path: "/demo",
+  id: '/demo',
+  path: '/demo',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const BadgecardRoute = BadgecardRouteImport.update({
-  id: "/badgecard",
-  path: "/badgecard",
+  id: '/badgecard',
+  path: '/badgecard',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const IndexLazyRoute = IndexLazyRouteImport.update({
-  id: "/",
-  path: "/",
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
-} as any).lazy(() => import("./routes/index.lazy").then((d) => d.Route));
+} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 const PokemonIndexRoute = PokemonIndexRouteImport.update({
-  id: "/pokemon/",
-  path: "/pokemon/",
+  id: '/pokemon/',
+  path: '/pokemon/',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
+const AuthSignInRoute = AuthSignInRouteImport.update({
+  id: '/auth/sign-in',
+  path: '/auth/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexLazyRoute;
-  "/badgecard": typeof BadgecardRoute;
-  "/demo": typeof DemoRoute;
-  "/sign-in": typeof SignInRoute;
-  "/pokemon": typeof PokemonIndexRoute;
+  '/': typeof IndexLazyRoute
+  '/badgecard': typeof BadgecardRoute
+  '/demo': typeof DemoRoute
+  '/productstestpage': typeof ProductstestpageRoute
+  '/auth/sign-in': typeof AuthSignInRoute
+  '/pokemon': typeof PokemonIndexRoute
 }
 export interface FileRoutesByTo {
-  "/": typeof IndexLazyRoute;
-  "/badgecard": typeof BadgecardRoute;
-  "/demo": typeof DemoRoute;
-  "/sign-in": typeof SignInRoute;
-  "/pokemon": typeof PokemonIndexRoute;
+  '/': typeof IndexLazyRoute
+  '/badgecard': typeof BadgecardRoute
+  '/demo': typeof DemoRoute
+  '/productstestpage': typeof ProductstestpageRoute
+  '/auth/sign-in': typeof AuthSignInRoute
+  '/pokemon': typeof PokemonIndexRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport;
-  "/": typeof IndexLazyRoute;
-  "/badgecard": typeof BadgecardRoute;
-  "/demo": typeof DemoRoute;
-  "/sign-in": typeof SignInRoute;
-  "/pokemon/": typeof PokemonIndexRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexLazyRoute
+  '/badgecard': typeof BadgecardRoute
+  '/demo': typeof DemoRoute
+  '/productstestpage': typeof ProductstestpageRoute
+  '/auth/sign-in': typeof AuthSignInRoute
+  '/pokemon/': typeof PokemonIndexRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/" | "/badgecard" | "/demo" | "/sign-in" | "/pokemon";
-  fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/badgecard" | "/demo" | "/sign-in" | "/pokemon";
-  id: "__root__" | "/" | "/badgecard" | "/demo" | "/sign-in" | "/pokemon/";
-  fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/badgecard'
+    | '/demo'
+    | '/productstestpage'
+    | '/auth/sign-in'
+    | '/pokemon'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/badgecard'
+    | '/demo'
+    | '/productstestpage'
+    | '/auth/sign-in'
+    | '/pokemon'
+  id:
+    | '__root__'
+    | '/'
+    | '/badgecard'
+    | '/demo'
+    | '/productstestpage'
+    | '/auth/sign-in'
+    | '/pokemon/'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexLazyRoute: typeof IndexLazyRoute;
-  BadgecardRoute: typeof BadgecardRoute;
-  DemoRoute: typeof DemoRoute;
-  SignInRoute: typeof SignInRoute;
-  PokemonIndexRoute: typeof PokemonIndexRoute;
+  IndexLazyRoute: typeof IndexLazyRoute
+  BadgecardRoute: typeof BadgecardRoute
+  DemoRoute: typeof DemoRoute
+  ProductstestpageRoute: typeof ProductstestpageRoute
+  AuthSignInRoute: typeof AuthSignInRoute
+  PokemonIndexRoute: typeof PokemonIndexRoute
 }
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/sign-in": {
-      id: "/sign-in";
-      path: "/sign-in";
-      fullPath: "/sign-in";
-      preLoaderRoute: typeof SignInRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/demo": {
-      id: "/demo";
-      path: "/demo";
-      fullPath: "/demo";
-      preLoaderRoute: typeof DemoRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/badgecard": {
-      id: "/badgecard";
-      path: "/badgecard";
-      fullPath: "/badgecard";
-      preLoaderRoute: typeof BadgecardRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexLazyRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/pokemon/": {
-      id: "/pokemon/";
-      path: "/pokemon";
-      fullPath: "/pokemon";
-      preLoaderRoute: typeof PokemonIndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+    '/productstestpage': {
+      id: '/productstestpage'
+      path: '/productstestpage'
+      fullPath: '/productstestpage'
+      preLoaderRoute: typeof ProductstestpageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo': {
+      id: '/demo'
+      path: '/demo'
+      fullPath: '/demo'
+      preLoaderRoute: typeof DemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/badgecard': {
+      id: '/badgecard'
+      path: '/badgecard'
+      fullPath: '/badgecard'
+      preLoaderRoute: typeof BadgecardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pokemon/': {
+      id: '/pokemon/'
+      path: '/pokemon'
+      fullPath: '/pokemon'
+      preLoaderRoute: typeof PokemonIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/sign-in': {
+      id: '/auth/sign-in'
+      path: '/auth/sign-in'
+      fullPath: '/auth/sign-in'
+      preLoaderRoute: typeof AuthSignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -126,9 +162,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   BadgecardRoute: BadgecardRoute,
   DemoRoute: DemoRoute,
-  SignInRoute: SignInRoute,
+  ProductstestpageRoute: ProductstestpageRoute,
+  AuthSignInRoute: AuthSignInRoute,
   PokemonIndexRoute: PokemonIndexRoute,
-};
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
