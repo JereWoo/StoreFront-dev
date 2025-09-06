@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.2.3/schema.json",
 	"formatter": {
 		"enabled": true,
 		"formatWithErrors": false,
@@ -9,7 +9,7 @@
 		"lineWidth": 80,
 		"attributePosition": "auto"
 	},
-	"organizeImports": { "enabled": true },
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
 		"enabled": true,
 		"rules": {
@@ -17,10 +17,9 @@
 			"complexity": {
 				"noBannedTypes": "error",
 				"noExtraBooleanCast": "error",
-				"noMultipleSpacesInRegularExpressionLiterals": "error",
 				"noUselessCatch": "error",
 				"noUselessTypeConstraint": "error",
-				"noWith": "error"
+				"noAdjacentSpacesInRegex": "error"
 			},
 			"correctness": {
 				"noConstAssign": "error",
@@ -30,7 +29,6 @@
 				"noGlobalObjectCalls": "error",
 				"noInnerDeclarations": "error",
 				"noInvalidConstructorSuper": "error",
-				"noNewSymbol": "error",
 				"noNonoctalDecimalEscape": "error",
 				"noPrecisionLoss": "error",
 				"noSelfAssign": "error",
@@ -43,14 +41,19 @@
 				"noUnsafeOptionalChaining": "error",
 				"noUnusedLabels": "error",
 				"noUnusedVariables": "error",
-				"useArrayLiterals": "off",
 				"useExhaustiveDependencies": "warn",
 				"useHookAtTopLevel": "error",
 				"useIsNan": "error",
 				"useValidForDirection": "error",
-				"useYield": "error"
+				"useYield": "error",
+				"noInvalidBuiltinInstantiation": "error",
+				"useValidTypeof": "error"
 			},
-			"style": { "noNamespace": "error", "useAsConstAssertion": "error" },
+			"style": {
+				"noNamespace": "error",
+				"useAsConstAssertion": "error",
+				"useArrayLiterals": "off"
+			},
 			"suspicious": {
 				"noAsyncPromiseExecutor": "error",
 				"noCatchAssign": "error",
@@ -77,10 +80,15 @@
 				"noUnsafeDeclarationMerging": "error",
 				"noUnsafeNegation": "error",
 				"useGetterReturn": "error",
-				"useValidTypeof": "error"
+				"noWith": "error"
 			}
 		},
-		"ignore": ["**/dist", "**/.eslintrc.cjs", "routeTree.gen.ts"]
+		"includes": [
+			"**",
+			"!**/dist",
+			"!**/.eslintrc.cjs",
+			"!**/routeTree.gen.ts"
+		]
 	},
 	"javascript": {
 		"formatter": {
@@ -106,22 +114,20 @@
 	},
 	"overrides": [
 		{
-			"include": ["*.ts", "*.tsx", "*.mts", "*.cts"],
+			"includes": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
 			"linter": {
 				"rules": {
 					"correctness": {
 						"noConstAssign": "off",
 						"noGlobalObjectCalls": "off",
 						"noInvalidConstructorSuper": "off",
-						"noNewSymbol": "off",
 						"noSetterReturn": "off",
 						"noUndeclaredVariables": "off",
 						"noUnreachable": "off",
-						"noUnreachableSuper": "off"
+						"noUnreachableSuper": "off",
+						"noInvalidBuiltinInstantiation": "off"
 					},
 					"style": {
-						"noArguments": "error",
-						"noVar": "error",
 						"useConst": "error"
 					},
 					"suspicious": {
@@ -132,7 +138,11 @@
 						"noImportAssign": "off",
 						"noRedeclare": "off",
 						"noUnsafeNegation": "off",
-						"useGetterReturn": "off"
+						"useGetterReturn": "off",
+						"noVar": "error"
+					},
+					"complexity": {
+						"noArguments": "error"
 					}
 				}
 			}

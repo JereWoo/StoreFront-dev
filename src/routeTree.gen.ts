@@ -11,10 +11,28 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { Route as rootRouteImport } from "./routes/__root";
+import { Route as SignInRouteImport } from "./routes/sign-in";
+import { Route as DemoRouteImport } from "./routes/demo";
+import { Route as BadgecardRouteImport } from "./routes/badgecard";
 import { Route as PokemonIndexRouteImport } from "./routes/pokemon/index";
 
 const IndexLazyRouteImport = createFileRoute("/")();
 
+const SignInRoute = SignInRouteImport.update({
+  id: "/sign-in",
+  path: "/sign-in",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const DemoRoute = DemoRouteImport.update({
+  id: "/demo",
+  path: "/demo",
+  getParentRoute: () => rootRouteImport,
+} as any);
+const BadgecardRoute = BadgecardRouteImport.update({
+  id: "/badgecard",
+  path: "/badgecard",
+  getParentRoute: () => rootRouteImport,
+} as any);
 const IndexLazyRoute = IndexLazyRouteImport.update({
   id: "/",
   path: "/",
@@ -28,32 +46,65 @@ const PokemonIndexRoute = PokemonIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexLazyRoute;
+  "/badgecard": typeof BadgecardRoute;
+  "/demo": typeof DemoRoute;
+  "/sign-in": typeof SignInRoute;
   "/pokemon": typeof PokemonIndexRoute;
 }
 export interface FileRoutesByTo {
   "/": typeof IndexLazyRoute;
+  "/badgecard": typeof BadgecardRoute;
+  "/demo": typeof DemoRoute;
+  "/sign-in": typeof SignInRoute;
   "/pokemon": typeof PokemonIndexRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   "/": typeof IndexLazyRoute;
+  "/badgecard": typeof BadgecardRoute;
+  "/demo": typeof DemoRoute;
+  "/sign-in": typeof SignInRoute;
   "/pokemon/": typeof PokemonIndexRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/" | "/pokemon";
+  fullPaths: "/" | "/badgecard" | "/demo" | "/sign-in" | "/pokemon";
   fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/pokemon";
-  id: "__root__" | "/" | "/pokemon/";
+  to: "/" | "/badgecard" | "/demo" | "/sign-in" | "/pokemon";
+  id: "__root__" | "/" | "/badgecard" | "/demo" | "/sign-in" | "/pokemon/";
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute;
+  BadgecardRoute: typeof BadgecardRoute;
+  DemoRoute: typeof DemoRoute;
+  SignInRoute: typeof SignInRoute;
   PokemonIndexRoute: typeof PokemonIndexRoute;
 }
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
+    "/sign-in": {
+      id: "/sign-in";
+      path: "/sign-in";
+      fullPath: "/sign-in";
+      preLoaderRoute: typeof SignInRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/demo": {
+      id: "/demo";
+      path: "/demo";
+      fullPath: "/demo";
+      preLoaderRoute: typeof DemoRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/badgecard": {
+      id: "/badgecard";
+      path: "/badgecard";
+      fullPath: "/badgecard";
+      preLoaderRoute: typeof BadgecardRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     "/": {
       id: "/";
       path: "/";
@@ -73,6 +124,9 @@ declare module "@tanstack/react-router" {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  BadgecardRoute: BadgecardRoute,
+  DemoRoute: DemoRoute,
+  SignInRoute: SignInRoute,
   PokemonIndexRoute: PokemonIndexRoute,
 };
 export const routeTree = rootRouteImport
