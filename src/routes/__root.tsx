@@ -17,6 +17,11 @@ function RootLayout() {
       {/* Root wrapper for styling isolation & theme */}
       <HeaderMegaMenu />
       <div className="root min-h-screen flex flex-col">
+        {/* This is where your pages will render */}
+        <main className="flex-1">
+          <Outlet />
+        </main>
+
         {/* Devtools */}
         <TanStackRouterDevtools />
       </div>
