@@ -15,7 +15,6 @@ import { Route as ProductstestpageRouteImport } from './routes/productstestpage'
 import { Route as EnvelopeRouteImport } from './routes/envelope'
 import { Route as DemoRouteImport } from './routes/demo'
 import { Route as BadgecardRouteImport } from './routes/badgecard'
-import { Route as PokemonIndexRouteImport } from './routes/pokemon/index'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
 
 const IndexLazyRouteImport = createFileRoute('/')()
@@ -45,11 +44,6 @@ const IndexLazyRoute = IndexLazyRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
-const PokemonIndexRoute = PokemonIndexRouteImport.update({
-  id: '/pokemon/',
-  path: '/pokemon/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthSignInRoute = AuthSignInRouteImport.update({
   id: '/auth/sign-in',
   path: '/auth/sign-in',
@@ -63,7 +57,6 @@ export interface FileRoutesByFullPath {
   '/envelope': typeof EnvelopeRoute
   '/productstestpage': typeof ProductstestpageRoute
   '/auth/sign-in': typeof AuthSignInRoute
-  '/pokemon': typeof PokemonIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
@@ -72,7 +65,6 @@ export interface FileRoutesByTo {
   '/envelope': typeof EnvelopeRoute
   '/productstestpage': typeof ProductstestpageRoute
   '/auth/sign-in': typeof AuthSignInRoute
-  '/pokemon': typeof PokemonIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -82,7 +74,6 @@ export interface FileRoutesById {
   '/envelope': typeof EnvelopeRoute
   '/productstestpage': typeof ProductstestpageRoute
   '/auth/sign-in': typeof AuthSignInRoute
-  '/pokemon/': typeof PokemonIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -93,7 +84,6 @@ export interface FileRouteTypes {
     | '/envelope'
     | '/productstestpage'
     | '/auth/sign-in'
-    | '/pokemon'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -102,7 +92,6 @@ export interface FileRouteTypes {
     | '/envelope'
     | '/productstestpage'
     | '/auth/sign-in'
-    | '/pokemon'
   id:
     | '__root__'
     | '/'
@@ -111,7 +100,6 @@ export interface FileRouteTypes {
     | '/envelope'
     | '/productstestpage'
     | '/auth/sign-in'
-    | '/pokemon/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -121,7 +109,6 @@ export interface RootRouteChildren {
   EnvelopeRoute: typeof EnvelopeRoute
   ProductstestpageRoute: typeof ProductstestpageRoute
   AuthSignInRoute: typeof AuthSignInRoute
-  PokemonIndexRoute: typeof PokemonIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -161,13 +148,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/pokemon/': {
-      id: '/pokemon/'
-      path: '/pokemon'
-      fullPath: '/pokemon'
-      preLoaderRoute: typeof PokemonIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/auth/sign-in': {
       id: '/auth/sign-in'
       path: '/auth/sign-in'
@@ -185,7 +165,6 @@ const rootRouteChildren: RootRouteChildren = {
   EnvelopeRoute: EnvelopeRoute,
   ProductstestpageRoute: ProductstestpageRoute,
   AuthSignInRoute: AuthSignInRoute,
-  PokemonIndexRoute: PokemonIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

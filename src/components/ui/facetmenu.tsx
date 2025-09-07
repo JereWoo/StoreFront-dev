@@ -1,0 +1,87 @@
+import { useQuery } from "@tanstack/react-query";
+import { query } from "@/lib/vendure/client";
+import { GET_FACETS } from "@/lib/vendure/queries";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+
+type FacetMenuProps = {
+  selected: string[];
+  onChange: (ids: string[]) => void;
+};
+
+type FacetValue = {
+  id: string;
+  name: string;
+};
+
+type Facet = {
+  id: string;
+  name: string;
+  values: FacetValue[];
+};
+
+export function FacetMenu({ selected, onChange }: FacetMenuProps) {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["facets"],
+    queryFn: () => query(GET_FACETS).then((res) => res.data),
+  });
+
+  const [active, setActive] = useState<string | null>(null);
+
+  if (isLoading) return <p>Loading facets…</p>;
+  if (error) return <p>Failed to load facets</p>;
+
+  const facets = data.facets.items;
+
+  const toggleValue = (id: string) => {
+    onChange(
+      selected.includes(id)
+        ? selected.filter((v) => v !== id)
+        : [...selected, id],
+    );
+  };
+
+  return (
+    <div className="flex h-[500px]">
+      {/* Left: categories */}
+      <div className="w-48 border-r pr-2">
+        <ul className="space-y-2">
+          {facets.map((facet: Facet) => (
+            <li
+              key={facet.id}
+              onClick={() => setActive(facet.id)}
+              className={cn(
+                "cursor-pointer px-2 py-1 rounded",
+                active === facet.id
+                  ? "bg-emerald-100 text-emerald-800"
+                  : "hover:bg-gray-100",
+              )}
+            >
+              {facet.name}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Right: facet values */}
+      <div className="flex-1 pl-4">
+        {active && (
+          <div className="space-y-2">
+            {facets
+              .find((f: Facet) => f.id === active)
+              ?.values.map((val: FacetValue) => (
+                <label key={val.id} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={selected.includes(val.id)}
+                    onChange={() => toggleValue(val.id)}
+                  />
+                  {val.name}
+                </label>
+              ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
