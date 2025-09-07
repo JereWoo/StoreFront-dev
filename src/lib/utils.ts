@@ -1,5 +1,10 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+// src/lib/queryClient.ts
+import { QueryClient } from "@tanstack/react-query";
+
+// Export a single shared instance
+export const queryClient = new QueryClient();
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

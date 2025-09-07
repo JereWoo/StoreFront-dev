@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { AuthenticationForm } from "@/components/mantine/auth/AuthenticationForm";
+import { AuthenticationForm } from "@/components/mantine/auth/AuthenticationForm.tsx";
 
 export const Route = createFileRoute("/auth/sign-in")({
   component: AuthenticationPage,

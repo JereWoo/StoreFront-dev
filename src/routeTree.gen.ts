@@ -13,11 +13,11 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as LayoutRouteImport } from './routes/_layout'
+import { Route as AuthVerifyRouteImport } from './routes/auth/verify'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
 import { Route as LayoutProductstestpageRouteImport } from './routes/_layout/productstestpage'
 import { Route as LayoutEnvelopeRouteImport } from './routes/_layout/envelope'
 import { Route as LayoutDemoRouteImport } from './routes/_layout/demo'
-import { Route as LayoutBadgecardRouteImport } from './routes/_layout/badgecard'
 
 const LayoutIndexLazyRouteImport = createFileRoute('/_layout/')()
 
@@ -35,6 +35,11 @@ const LayoutIndexLazyRoute = LayoutIndexLazyRouteImport.update({
   path: '/',
   getParentRoute: () => LayoutRoute,
 } as any).lazy(() => import('./routes/_layout/index.lazy').then((d) => d.Route))
+const AuthVerifyRoute = AuthVerifyRouteImport.update({
+  id: '/verify',
+  path: '/verify',
+  getParentRoute: () => AuthRoute,
+} as any)
 const AuthSignInRoute = AuthSignInRouteImport.update({
   id: '/sign-in',
   path: '/sign-in',
@@ -55,69 +60,64 @@ const LayoutDemoRoute = LayoutDemoRouteImport.update({
   path: '/demo',
   getParentRoute: () => LayoutRoute,
 } as any)
-const LayoutBadgecardRoute = LayoutBadgecardRouteImport.update({
-  id: '/badgecard',
-  path: '/badgecard',
-  getParentRoute: () => LayoutRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/auth': typeof AuthRouteWithChildren
-  '/badgecard': typeof LayoutBadgecardRoute
   '/demo': typeof LayoutDemoRoute
   '/envelope': typeof LayoutEnvelopeRoute
   '/productstestpage': typeof LayoutProductstestpageRoute
   '/auth/sign-in': typeof AuthSignInRoute
+  '/auth/verify': typeof AuthVerifyRoute
   '/': typeof LayoutIndexLazyRoute
 }
 export interface FileRoutesByTo {
   '/auth': typeof AuthRouteWithChildren
-  '/badgecard': typeof LayoutBadgecardRoute
   '/demo': typeof LayoutDemoRoute
   '/envelope': typeof LayoutEnvelopeRoute
   '/productstestpage': typeof LayoutProductstestpageRoute
   '/auth/sign-in': typeof AuthSignInRoute
+  '/auth/verify': typeof AuthVerifyRoute
   '/': typeof LayoutIndexLazyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layout': typeof LayoutRouteWithChildren
   '/auth': typeof AuthRouteWithChildren
-  '/_layout/badgecard': typeof LayoutBadgecardRoute
   '/_layout/demo': typeof LayoutDemoRoute
   '/_layout/envelope': typeof LayoutEnvelopeRoute
   '/_layout/productstestpage': typeof LayoutProductstestpageRoute
   '/auth/sign-in': typeof AuthSignInRoute
+  '/auth/verify': typeof AuthVerifyRoute
   '/_layout/': typeof LayoutIndexLazyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/auth'
-    | '/badgecard'
     | '/demo'
     | '/envelope'
     | '/productstestpage'
     | '/auth/sign-in'
+    | '/auth/verify'
     | '/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/auth'
-    | '/badgecard'
     | '/demo'
     | '/envelope'
     | '/productstestpage'
     | '/auth/sign-in'
+    | '/auth/verify'
     | '/'
   id:
     | '__root__'
     | '/_layout'
     | '/auth'
-    | '/_layout/badgecard'
     | '/_layout/demo'
     | '/_layout/envelope'
     | '/_layout/productstestpage'
     | '/auth/sign-in'
+    | '/auth/verify'
     | '/_layout/'
   fileRoutesById: FileRoutesById
 }
@@ -149,6 +149,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexLazyRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/auth/verify': {
+      id: '/auth/verify'
+      path: '/verify'
+      fullPath: '/auth/verify'
+      preLoaderRoute: typeof AuthVerifyRouteImport
+      parentRoute: typeof AuthRoute
+    }
     '/auth/sign-in': {
       id: '/auth/sign-in'
       path: '/sign-in'
@@ -177,18 +184,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutDemoRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/badgecard': {
-      id: '/_layout/badgecard'
-      path: '/badgecard'
-      fullPath: '/badgecard'
-      preLoaderRoute: typeof LayoutBadgecardRouteImport
-      parentRoute: typeof LayoutRoute
-    }
   }
 }
 
 interface LayoutRouteChildren {
-  LayoutBadgecardRoute: typeof LayoutBadgecardRoute
   LayoutDemoRoute: typeof LayoutDemoRoute
   LayoutEnvelopeRoute: typeof LayoutEnvelopeRoute
   LayoutProductstestpageRoute: typeof LayoutProductstestpageRoute
@@ -196,7 +195,6 @@ interface LayoutRouteChildren {
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
-  LayoutBadgecardRoute: LayoutBadgecardRoute,
   LayoutDemoRoute: LayoutDemoRoute,
   LayoutEnvelopeRoute: LayoutEnvelopeRoute,
   LayoutProductstestpageRoute: LayoutProductstestpageRoute,
@@ -208,10 +206,12 @@ const LayoutRouteWithChildren =
 
 interface AuthRouteChildren {
   AuthSignInRoute: typeof AuthSignInRoute
+  AuthVerifyRoute: typeof AuthVerifyRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthSignInRoute: AuthSignInRoute,
+  AuthVerifyRoute: AuthVerifyRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)

@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 
 // If using bearer-token based session management, we'll store the token
 // in localStorage using this key.
+// TODO: storing tokens in LocalStorage is not secure and persists. This is fine for dev but real solution needs to be implemented. Likely will do Token + refresh token to make it easier to develop and APP in the future.
+
 const AUTH_TOKEN_KEY = "auth_token";
 
 const API_URL = "http://localhost:3000/shop-api";

@@ -71,7 +71,7 @@ export function BadgeCard({
           Show details
         </Button>
         <ActionIcon variant="default" radius="md" size={36}>
-          <Heart className={classes.like} stroke={1.5} />
+          <Heart className={classes.like} stroke={"1.5"} />
         </ActionIcon>
       </Group>
     </Card>
