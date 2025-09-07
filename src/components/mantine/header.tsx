@@ -26,7 +26,9 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { SearchBar } from "../ui/SearchBar";
 import classes from "../../css/HeaderMegaMenu.module.css";
+import { User } from "lucide-react";
 
 const mockdata = [
   {
@@ -88,7 +90,9 @@ export function HeaderMegaMenu() {
   return (
     <Box pb={120}>
       <header className={classes.header}>
-        <Group justify="space-between" h="100%">
+        {/* Top row */}
+        <Group justify="space-between" h="100%" px="md" py="4">
+          {/* Logo */}
           <Group>
             <img src="/NEB-Logo.png" alt="My Logo" className="h-14 w-auto" />
             <Text fw={700} size="xl">
@@ -96,68 +100,25 @@ export function HeaderMegaMenu() {
             </Text>
           </Group>
 
-          <Group h="100%" gap={0} visibleFrom="sm">
-            <a href="#" className={classes.link}>
-              Home
-            </a>
-            <HoverCard
-              width={600}
-              position="bottom"
-              radius="md"
-              shadow="md"
-              withinPortal
-            >
-              <HoverCard.Target>
-                <a href="#" className={classes.link}>
-                  <Center inline>
-                    <Box component="span" mr={5}>
-                      Features
-                    </Box>
-                    <IconChevronDown size={16} color={theme.colors.blue[6]} />
-                  </Center>
-                </a>
-              </HoverCard.Target>
+          {/* Search bar */}
+          <Box className="flex-1 hidden sm:flex justify-center">
+            <SearchBar
+              value={"searchTerm"}
+              onChange={"setSearchTerm"}
+              placeholder="Search books..."
+            />
+          </Box>
 
-              <HoverCard.Dropdown style={{ overflow: "hidden" }}>
-                <Group justify="space-between" px="md">
-                  <Text fw={500}>Features</Text>
-                  <Anchor href="#" fz="xs">
-                    View all
-                  </Anchor>
-                </Group>
-
-                <Divider my="sm" />
-
-                <SimpleGrid cols={2} spacing={0}>
-                  {links}
-                </SimpleGrid>
-
-                <div className={classes.dropdownFooter}>
-                  <Group justify="space-between">
-                    <div>
-                      <Text fw={500} fz="sm">
-                        Get started
-                      </Text>
-                      <Text size="xs" c="dimmed">
-                        Their food sources have decreased, and their numbers
-                      </Text>
-                    </div>
-                    <Button variant="default">Get started</Button>
-                  </Group>
-                </div>
-              </HoverCard.Dropdown>
-            </HoverCard>
-            <a href="#" className={classes.link}>
-              Learn
-            </a>
-            <a href="#" className={classes.link}>
-              Academy
-            </a>
-          </Group>
-
+          {/* Account buttons */}
+          {/* Profile link */}
           <Group visibleFrom="sm">
-            <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
+            <a
+              href="/auth/sign-in"
+              className="flex items-center gap-2 rounded-full px-4 py-2 text-gray-700 hover:text-emerald-700 transition-colors"
+            >
+              <User className="h-5 w-5" />
+              <span>Login or Sign Up</span>
+            </a>
           </Group>
 
           <Burger
@@ -166,8 +127,63 @@ export function HeaderMegaMenu() {
             hiddenFrom="sm"
           />
         </Group>
+
+        {/* Second row: navigation */}
+        <Group justify="center" gap="lg" px="md" py="xs" visibleFrom="sm">
+          <a href="#" className={classes.link}>
+            Home
+          </a>
+          <HoverCard width={600} position="bottom" radius="md" shadow="md">
+            <HoverCard.Target>
+              <a href="#" className={classes.link}>
+                <Center inline>
+                  <Box component="span" mr={5}>
+                    Features
+                  </Box>
+                  <IconChevronDown size={16} color={theme.colors.blue[6]} />
+                </Center>
+              </a>
+            </HoverCard.Target>
+
+            <HoverCard.Dropdown style={{ overflow: "hidden" }}>
+              <Group justify="space-between" px="md">
+                <Text fw={500}>Features</Text>
+                <Anchor href="#" fz="xs">
+                  View all
+                </Anchor>
+              </Group>
+
+              <Divider my="sm" />
+
+              <SimpleGrid cols={2} spacing={0}>
+                {links}
+              </SimpleGrid>
+
+              <div className={classes.dropdownFooter}>
+                <Group justify="space-between">
+                  <div>
+                    <Text fw={500} fz="sm">
+                      Get started
+                    </Text>
+                    <Text size="xs" c="dimmed">
+                      Their food sources have decreased, and their numbers
+                    </Text>
+                  </div>
+                  <Button variant="default">Get started</Button>
+                </Group>
+              </div>
+            </HoverCard.Dropdown>
+          </HoverCard>
+          <a href="#" className={classes.link}>
+            Learn
+          </a>
+          <a href="#" className={classes.link}>
+            Academy
+          </a>
+        </Group>
       </header>
 
+      {/* Mobile drawer unchanged */}
       <Drawer
         opened={drawerOpened}
         onClose={closeDrawer}
@@ -179,7 +195,6 @@ export function HeaderMegaMenu() {
       >
         <ScrollArea h="calc(100vh - 80px" mx="-md">
           <Divider my="sm" />
-
           <a href="#" className={classes.link}>
             Home
           </a>
@@ -198,9 +213,7 @@ export function HeaderMegaMenu() {
           <a href="#" className={classes.link}>
             Academy
           </a>
-
           <Divider my="sm" />
-
           <Group justify="center" grow pb="xl" px="md">
             <Button variant="default">Log in</Button>
             <Button>Sign up</Button>

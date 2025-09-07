@@ -11,160 +11,214 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ProductstestpageRouteImport } from './routes/productstestpage'
-import { Route as EnvelopeRouteImport } from './routes/envelope'
-import { Route as DemoRouteImport } from './routes/demo'
-import { Route as BadgecardRouteImport } from './routes/badgecard'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
+import { Route as LayoutProductstestpageRouteImport } from './routes/_layout/productstestpage'
+import { Route as LayoutEnvelopeRouteImport } from './routes/_layout/envelope'
+import { Route as LayoutDemoRouteImport } from './routes/_layout/demo'
+import { Route as LayoutBadgecardRouteImport } from './routes/_layout/badgecard'
 
-const IndexLazyRouteImport = createFileRoute('/')()
+const LayoutIndexLazyRouteImport = createFileRoute('/_layout/')()
 
-const ProductstestpageRoute = ProductstestpageRouteImport.update({
-  id: '/productstestpage',
-  path: '/productstestpage',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EnvelopeRoute = EnvelopeRouteImport.update({
-  id: '/envelope',
-  path: '/envelope',
+const LayoutRoute = LayoutRouteImport.update({
+  id: '/_layout',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoRoute = DemoRouteImport.update({
-  id: '/demo',
-  path: '/demo',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BadgecardRoute = BadgecardRouteImport.update({
-  id: '/badgecard',
-  path: '/badgecard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexLazyRoute = IndexLazyRouteImport.update({
+const LayoutIndexLazyRoute = LayoutIndexLazyRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+  getParentRoute: () => LayoutRoute,
+} as any).lazy(() => import('./routes/_layout/index.lazy').then((d) => d.Route))
 const AuthSignInRoute = AuthSignInRouteImport.update({
-  id: '/auth/sign-in',
-  path: '/auth/sign-in',
-  getParentRoute: () => rootRouteImport,
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => AuthRoute,
+} as any)
+const LayoutProductstestpageRoute = LayoutProductstestpageRouteImport.update({
+  id: '/productstestpage',
+  path: '/productstestpage',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutEnvelopeRoute = LayoutEnvelopeRouteImport.update({
+  id: '/envelope',
+  path: '/envelope',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutDemoRoute = LayoutDemoRouteImport.update({
+  id: '/demo',
+  path: '/demo',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutBadgecardRoute = LayoutBadgecardRouteImport.update({
+  id: '/badgecard',
+  path: '/badgecard',
+  getParentRoute: () => LayoutRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexLazyRoute
-  '/badgecard': typeof BadgecardRoute
-  '/demo': typeof DemoRoute
-  '/envelope': typeof EnvelopeRoute
-  '/productstestpage': typeof ProductstestpageRoute
+  '/auth': typeof AuthRouteWithChildren
+  '/badgecard': typeof LayoutBadgecardRoute
+  '/demo': typeof LayoutDemoRoute
+  '/envelope': typeof LayoutEnvelopeRoute
+  '/productstestpage': typeof LayoutProductstestpageRoute
   '/auth/sign-in': typeof AuthSignInRoute
+  '/': typeof LayoutIndexLazyRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexLazyRoute
-  '/badgecard': typeof BadgecardRoute
-  '/demo': typeof DemoRoute
-  '/envelope': typeof EnvelopeRoute
-  '/productstestpage': typeof ProductstestpageRoute
+  '/auth': typeof AuthRouteWithChildren
+  '/badgecard': typeof LayoutBadgecardRoute
+  '/demo': typeof LayoutDemoRoute
+  '/envelope': typeof LayoutEnvelopeRoute
+  '/productstestpage': typeof LayoutProductstestpageRoute
   '/auth/sign-in': typeof AuthSignInRoute
+  '/': typeof LayoutIndexLazyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexLazyRoute
-  '/badgecard': typeof BadgecardRoute
-  '/demo': typeof DemoRoute
-  '/envelope': typeof EnvelopeRoute
-  '/productstestpage': typeof ProductstestpageRoute
+  '/_layout': typeof LayoutRouteWithChildren
+  '/auth': typeof AuthRouteWithChildren
+  '/_layout/badgecard': typeof LayoutBadgecardRoute
+  '/_layout/demo': typeof LayoutDemoRoute
+  '/_layout/envelope': typeof LayoutEnvelopeRoute
+  '/_layout/productstestpage': typeof LayoutProductstestpageRoute
   '/auth/sign-in': typeof AuthSignInRoute
+  '/_layout/': typeof LayoutIndexLazyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
+    | '/auth'
     | '/badgecard'
     | '/demo'
     | '/envelope'
     | '/productstestpage'
     | '/auth/sign-in'
+    | '/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
+    | '/auth'
     | '/badgecard'
     | '/demo'
     | '/envelope'
     | '/productstestpage'
     | '/auth/sign-in'
+    | '/'
   id:
     | '__root__'
-    | '/'
-    | '/badgecard'
-    | '/demo'
-    | '/envelope'
-    | '/productstestpage'
+    | '/_layout'
+    | '/auth'
+    | '/_layout/badgecard'
+    | '/_layout/demo'
+    | '/_layout/envelope'
+    | '/_layout/productstestpage'
     | '/auth/sign-in'
+    | '/_layout/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexLazyRoute: typeof IndexLazyRoute
-  BadgecardRoute: typeof BadgecardRoute
-  DemoRoute: typeof DemoRoute
-  EnvelopeRoute: typeof EnvelopeRoute
-  ProductstestpageRoute: typeof ProductstestpageRoute
-  AuthSignInRoute: typeof AuthSignInRoute
+  LayoutRoute: typeof LayoutRouteWithChildren
+  AuthRoute: typeof AuthRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/productstestpage': {
-      id: '/productstestpage'
-      path: '/productstestpage'
-      fullPath: '/productstestpage'
-      preLoaderRoute: typeof ProductstestpageRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/envelope': {
-      id: '/envelope'
-      path: '/envelope'
-      fullPath: '/envelope'
-      preLoaderRoute: typeof EnvelopeRouteImport
+    '/_layout': {
+      id: '/_layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof LayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/demo': {
-      id: '/demo'
-      path: '/demo'
-      fullPath: '/demo'
-      preLoaderRoute: typeof DemoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/badgecard': {
-      id: '/badgecard'
-      path: '/badgecard'
-      fullPath: '/badgecard'
-      preLoaderRoute: typeof BadgecardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
+    '/_layout/': {
+      id: '/_layout/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexLazyRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof LayoutIndexLazyRouteImport
+      parentRoute: typeof LayoutRoute
     }
     '/auth/sign-in': {
       id: '/auth/sign-in'
-      path: '/auth/sign-in'
+      path: '/sign-in'
       fullPath: '/auth/sign-in'
       preLoaderRoute: typeof AuthSignInRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_layout/productstestpage': {
+      id: '/_layout/productstestpage'
+      path: '/productstestpage'
+      fullPath: '/productstestpage'
+      preLoaderRoute: typeof LayoutProductstestpageRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/envelope': {
+      id: '/_layout/envelope'
+      path: '/envelope'
+      fullPath: '/envelope'
+      preLoaderRoute: typeof LayoutEnvelopeRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/demo': {
+      id: '/_layout/demo'
+      path: '/demo'
+      fullPath: '/demo'
+      preLoaderRoute: typeof LayoutDemoRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/badgecard': {
+      id: '/_layout/badgecard'
+      path: '/badgecard'
+      fullPath: '/badgecard'
+      preLoaderRoute: typeof LayoutBadgecardRouteImport
+      parentRoute: typeof LayoutRoute
     }
   }
 }
 
-const rootRouteChildren: RootRouteChildren = {
-  IndexLazyRoute: IndexLazyRoute,
-  BadgecardRoute: BadgecardRoute,
-  DemoRoute: DemoRoute,
-  EnvelopeRoute: EnvelopeRoute,
-  ProductstestpageRoute: ProductstestpageRoute,
+interface LayoutRouteChildren {
+  LayoutBadgecardRoute: typeof LayoutBadgecardRoute
+  LayoutDemoRoute: typeof LayoutDemoRoute
+  LayoutEnvelopeRoute: typeof LayoutEnvelopeRoute
+  LayoutProductstestpageRoute: typeof LayoutProductstestpageRoute
+  LayoutIndexLazyRoute: typeof LayoutIndexLazyRoute
+}
+
+const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutBadgecardRoute: LayoutBadgecardRoute,
+  LayoutDemoRoute: LayoutDemoRoute,
+  LayoutEnvelopeRoute: LayoutEnvelopeRoute,
+  LayoutProductstestpageRoute: LayoutProductstestpageRoute,
+  LayoutIndexLazyRoute: LayoutIndexLazyRoute,
+}
+
+const LayoutRouteWithChildren =
+  LayoutRoute._addFileChildren(LayoutRouteChildren)
+
+interface AuthRouteChildren {
+  AuthSignInRoute: typeof AuthSignInRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
   AuthSignInRoute: AuthSignInRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
+const rootRouteChildren: RootRouteChildren = {
+  LayoutRoute: LayoutRouteWithChildren,
+  AuthRoute: AuthRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

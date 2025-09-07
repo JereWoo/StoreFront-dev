@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BadgeCard } from "../components/mantine/badgecard";
+import { BadgeCard } from "@/components/mantine/badgecard";
 
 function BadgeCardGridPage() {
   // mock data – imagine this comes from an API
@@ -19,6 +19,6 @@ function BadgeCardGridPage() {
   );
 }
 
-export const Route = createFileRoute("/badgecard")({
+export const Route = createFileRoute("/_layout/badgecard")({
   component: BadgeCardGridPage,
 });

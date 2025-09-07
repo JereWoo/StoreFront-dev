@@ -17,7 +17,7 @@ import {
 import { usePagination } from "@/lib/usePagination";
 import { FilterModal } from "@/components/ui/filtermodal.tsx";
 
-export const Route = createFileRoute("/productstestpage")({
+export const Route = createFileRoute("/_layout/productstestpage")({
   component: RouteComponent,
 });
 

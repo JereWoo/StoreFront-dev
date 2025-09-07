@@ -1,7 +1,7 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { Calendar } from "@/components/ui/calendar";
 
-export const Route = createLazyFileRoute("/")({
+export const Route = createLazyFileRoute("/_layout/")({
   component: Index,
 });
 

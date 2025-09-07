@@ -1,41 +1,23 @@
-import { Outlet, createRootRoute } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-
-import "@mantine/core/styles.css";
+// src/routes/_root.tsx
+import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { MantineProvider } from "@mantine/core";
-import { HeaderMegaMenu } from "@/components/mantine/header";
-
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { FooterLinks } from "@/components/mantine/footer.tsx";
 
-// Create a single query client for the whole app
 const queryClient = new QueryClient();
 
-function RootLayout() {
-  return (
+export const Route = createRootRoute({
+  component: () => (
     <MantineProvider>
       <QueryClientProvider client={queryClient}>
-        <div className="root min-h-screen flex flex-col">
-          {/* Header at the top */}
-          <HeaderMegaMenu />
+        <main className="root flex-1">
+          <Outlet />
+        </main>
 
-          {/* Page content */}
-          <main className="flex-1">
-            <Outlet />
-          </main>
-
-          <FooterLinks />
-
-          {/* Devtools */}
-          <TanStackRouterDevtools />
-          <ReactQueryDevtools initialIsOpen={false} />
-        </div>
+        <TanStackRouterDevtools />
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </MantineProvider>
-  );
-}
-
-export const Route = createRootRoute({
-  component: RootLayout,
+  ),
 });
