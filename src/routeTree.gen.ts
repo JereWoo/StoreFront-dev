@@ -12,6 +12,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProductstestpageRouteImport } from './routes/productstestpage'
+import { Route as EnvelopeRouteImport } from './routes/envelope'
 import { Route as DemoRouteImport } from './routes/demo'
 import { Route as BadgecardRouteImport } from './routes/badgecard'
 import { Route as PokemonIndexRouteImport } from './routes/pokemon/index'
@@ -22,6 +23,11 @@ const IndexLazyRouteImport = createFileRoute('/')()
 const ProductstestpageRoute = ProductstestpageRouteImport.update({
   id: '/productstestpage',
   path: '/productstestpage',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnvelopeRoute = EnvelopeRouteImport.update({
+  id: '/envelope',
+  path: '/envelope',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoRoute = DemoRouteImport.update({
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/badgecard': typeof BadgecardRoute
   '/demo': typeof DemoRoute
+  '/envelope': typeof EnvelopeRoute
   '/productstestpage': typeof ProductstestpageRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/pokemon': typeof PokemonIndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/badgecard': typeof BadgecardRoute
   '/demo': typeof DemoRoute
+  '/envelope': typeof EnvelopeRoute
   '/productstestpage': typeof ProductstestpageRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/pokemon': typeof PokemonIndexRoute
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/': typeof IndexLazyRoute
   '/badgecard': typeof BadgecardRoute
   '/demo': typeof DemoRoute
+  '/envelope': typeof EnvelopeRoute
   '/productstestpage': typeof ProductstestpageRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/pokemon/': typeof PokemonIndexRoute
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/'
     | '/badgecard'
     | '/demo'
+    | '/envelope'
     | '/productstestpage'
     | '/auth/sign-in'
     | '/pokemon'
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/'
     | '/badgecard'
     | '/demo'
+    | '/envelope'
     | '/productstestpage'
     | '/auth/sign-in'
     | '/pokemon'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/'
     | '/badgecard'
     | '/demo'
+    | '/envelope'
     | '/productstestpage'
     | '/auth/sign-in'
     | '/pokemon/'
@@ -106,6 +118,7 @@ export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   BadgecardRoute: typeof BadgecardRoute
   DemoRoute: typeof DemoRoute
+  EnvelopeRoute: typeof EnvelopeRoute
   ProductstestpageRoute: typeof ProductstestpageRoute
   AuthSignInRoute: typeof AuthSignInRoute
   PokemonIndexRoute: typeof PokemonIndexRoute
@@ -118,6 +131,13 @@ declare module '@tanstack/react-router' {
       path: '/productstestpage'
       fullPath: '/productstestpage'
       preLoaderRoute: typeof ProductstestpageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/envelope': {
+      id: '/envelope'
+      path: '/envelope'
+      fullPath: '/envelope'
+      preLoaderRoute: typeof EnvelopeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo': {
@@ -162,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   BadgecardRoute: BadgecardRoute,
   DemoRoute: DemoRoute,
+  EnvelopeRoute: EnvelopeRoute,
   ProductstestpageRoute: ProductstestpageRoute,
   AuthSignInRoute: AuthSignInRoute,
   PokemonIndexRoute: PokemonIndexRoute,
