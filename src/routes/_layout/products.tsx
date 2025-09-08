@@ -17,15 +17,15 @@ import {
 import { usePagination } from "@/lib/usePagination";
 import { FilterModal } from "@/components/ui/filtermodal.tsx";
 
-export const Route = createFileRoute("/_layout/productstestpage")({
+export const Route = createFileRoute("/_layout/products")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   // Track facet filters (facetValueIds from modal)
   const [filters, setFilters] = useState<string[]>([]);
-  // const [term] = useState(""); // later: add search box
-  // const [collectionSlug] = useState<string | undefined>(undefined); // later: collection pages
+  // TODO: const [term] = useState(""); // later: add search box
+  // TODO: const [collectionSlug] = useState<string | undefined>(undefined); // later: collection pages
 
   // pagination
   const { page, setPage, skip, take } = usePagination(0, 12);

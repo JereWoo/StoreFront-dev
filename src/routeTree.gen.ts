@@ -15,7 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as AuthVerifyRouteImport } from './routes/auth/verify'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
-import { Route as LayoutProductstestpageRouteImport } from './routes/_layout/productstestpage'
+import { Route as LayoutProductsRouteImport } from './routes/_layout/products'
 import { Route as LayoutEnvelopeRouteImport } from './routes/_layout/envelope'
 import { Route as LayoutDemoRouteImport } from './routes/_layout/demo'
 
@@ -45,9 +45,9 @@ const AuthSignInRoute = AuthSignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => AuthRoute,
 } as any)
-const LayoutProductstestpageRoute = LayoutProductstestpageRouteImport.update({
-  id: '/productstestpage',
-  path: '/productstestpage',
+const LayoutProductsRoute = LayoutProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutEnvelopeRoute = LayoutEnvelopeRouteImport.update({
@@ -65,7 +65,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRouteWithChildren
   '/demo': typeof LayoutDemoRoute
   '/envelope': typeof LayoutEnvelopeRoute
-  '/productstestpage': typeof LayoutProductstestpageRoute
+  '/products': typeof LayoutProductsRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/verify': typeof AuthVerifyRoute
   '/': typeof LayoutIndexLazyRoute
@@ -74,7 +74,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRouteWithChildren
   '/demo': typeof LayoutDemoRoute
   '/envelope': typeof LayoutEnvelopeRoute
-  '/productstestpage': typeof LayoutProductstestpageRoute
+  '/products': typeof LayoutProductsRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/verify': typeof AuthVerifyRoute
   '/': typeof LayoutIndexLazyRoute
@@ -85,7 +85,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRouteWithChildren
   '/_layout/demo': typeof LayoutDemoRoute
   '/_layout/envelope': typeof LayoutEnvelopeRoute
-  '/_layout/productstestpage': typeof LayoutProductstestpageRoute
+  '/_layout/products': typeof LayoutProductsRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/verify': typeof AuthVerifyRoute
   '/_layout/': typeof LayoutIndexLazyRoute
@@ -96,7 +96,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/demo'
     | '/envelope'
-    | '/productstestpage'
+    | '/products'
     | '/auth/sign-in'
     | '/auth/verify'
     | '/'
@@ -105,7 +105,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/demo'
     | '/envelope'
-    | '/productstestpage'
+    | '/products'
     | '/auth/sign-in'
     | '/auth/verify'
     | '/'
@@ -115,7 +115,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_layout/demo'
     | '/_layout/envelope'
-    | '/_layout/productstestpage'
+    | '/_layout/products'
     | '/auth/sign-in'
     | '/auth/verify'
     | '/_layout/'
@@ -163,11 +163,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignInRouteImport
       parentRoute: typeof AuthRoute
     }
-    '/_layout/productstestpage': {
-      id: '/_layout/productstestpage'
-      path: '/productstestpage'
-      fullPath: '/productstestpage'
-      preLoaderRoute: typeof LayoutProductstestpageRouteImport
+    '/_layout/products': {
+      id: '/_layout/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof LayoutProductsRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/envelope': {
@@ -190,14 +190,14 @@ declare module '@tanstack/react-router' {
 interface LayoutRouteChildren {
   LayoutDemoRoute: typeof LayoutDemoRoute
   LayoutEnvelopeRoute: typeof LayoutEnvelopeRoute
-  LayoutProductstestpageRoute: typeof LayoutProductstestpageRoute
+  LayoutProductsRoute: typeof LayoutProductsRoute
   LayoutIndexLazyRoute: typeof LayoutIndexLazyRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutDemoRoute: LayoutDemoRoute,
   LayoutEnvelopeRoute: LayoutEnvelopeRoute,
-  LayoutProductstestpageRoute: LayoutProductstestpageRoute,
+  LayoutProductsRoute: LayoutProductsRoute,
   LayoutIndexLazyRoute: LayoutIndexLazyRoute,
 }
 

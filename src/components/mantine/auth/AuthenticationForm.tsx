@@ -21,6 +21,8 @@ import { REGISTER_CUSTOMER_ACCOUNT, LOGIN } from "@/lib/vendure/mutations";
 
 // ---------- Types ----------
 
+// TODO: this is garbage chatGPT code review and figure out a real solution for types and not casting as "any"
+
 type LoginSuccess = {
   id: string;
   identifier: string;

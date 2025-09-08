@@ -59,7 +59,7 @@ export function FooterLinks() {
   });
 
   return (
-    <footer className={classes.footer}>
+    <footer className={classes.footer} bg-emerald-900 text-white>
       <Container className={classes.inner}>
         <div className={classes.logo}>
           <img src="/NEB-Logo.png" alt="My Logo" className="h-14 w-auto" />
