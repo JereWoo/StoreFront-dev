@@ -2,6 +2,7 @@
 export const REGISTER_CUSTOMER_ACCOUNT = /* GraphQL */ `
   mutation RegisterCustomerAccount($input: RegisterCustomerInput!) {
     registerCustomerAccount(input: $input) {
+      __typename
       ... on Success {
         success
       }
@@ -44,6 +45,7 @@ export const VERIFY_CUSTOMER_ACCOUNT = /* GraphQL */ `
 export const LOGIN = /* GraphQL */ `
   mutation Login($username: String!, $password: String!) {
     login(username: $username, password: $password, rememberMe: true) {
+      __typename
       ... on CurrentUser {
         id
         identifier
@@ -52,10 +54,22 @@ export const LOGIN = /* GraphQL */ `
         errorCode
         message
       }
+      ... on NotVerifiedError {
+        errorCode
+        message
+      }
       ... on NativeAuthStrategyError {
         errorCode
         message
       }
+    }
+  }
+`;
+
+export const LOGOUT_MUTATION = /* GraphQL */ `
+  mutation Logout {
+    logout {
+      success
     }
   }
 `;

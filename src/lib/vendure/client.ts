@@ -6,7 +6,7 @@
 
 const AUTH_TOKEN_KEY = "auth_token";
 
-const API_URL = "http://localhost:3000/shop-api";
+const API_URL = "https://api.notenoughbooks.com/shop-api"; //TODO: Move to ENV variable
 
 let languageCode: string | undefined;
 let channelToken: string | undefined;

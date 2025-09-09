@@ -13,60 +13,74 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { upperFirst, useToggle } from "@mantine/hooks";
-import { GoogleButton } from "./GoogleButton";
-import { TwitterButton } from "./TwitterButton";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import { query } from "@/lib/vendure/client";
 import { REGISTER_CUSTOMER_ACCOUNT, LOGIN } from "@/lib/vendure/mutations";
+import { useAuth } from "@/lib/vendure/AuthState";
 
-// ---------- Types ----------
+// ---------- Types that match Vendure responses ----------
 
-// TODO: this is garbage chatGPT code review and figure out a real solution for types and not casting as "any"
-
-type LoginSuccess = {
+type CurrentUser = {
+  __typename: "CurrentUser";
   id: string;
   identifier: string;
 };
 
+type LoginErrorName =
+  | "InvalidCredentialsError"
+  | "NotVerifiedError"
+  | "NativeAuthStrategyError"
+  | "ErrorResult";
+
 type LoginError = {
-  errorCode: string;
+  __typename: LoginErrorName;
   message: string;
+  errorCode?: string;
 };
 
-type LoginResponse = LoginSuccess | LoginError;
+type LoginResult = CurrentUser | LoginError;
 
-function isLoginSuccess(resp: LoginResponse): resp is LoginSuccess {
-  return "id" in resp;
-}
-
-type RegisterSuccess = {
-  success: boolean;
-};
-
-type RegisterError = {
-  errorCode: string;
-  message: string;
-};
-
-type RegisterResponse = RegisterSuccess | RegisterError;
-
-function isRegisterSuccess(resp: RegisterResponse): resp is RegisterSuccess {
-  return "success" in resp;
-}
+type RegisterResult =
+  | { __typename: "Success"; success: boolean }
+  | { __typename: string; message: string; errorCode?: string };
 
 // ---------- Component ----------
 
 export function AuthenticationForm(props: PaperProps) {
-  const registerMutation = useMutation<
-    RegisterResponse,
-    Error,
-    {
+  const [mode, toggleMode] = useToggle<"login" | "register">([
+    "login",
+    "register",
+  ]);
+  const navigate = useNavigate();
+  const { refresh } = useAuth();
+
+  const redirectTo =
+    (typeof window !== "undefined" &&
+      new URLSearchParams(window.location.search).get("redirect")) ||
+    "/";
+
+  const form = useForm({
+    initialValues: { email: "", name: "", password: "", terms: true },
+    validate: {
+      email: (val) => (/^\S+@\S+$/.test(val) ? null : "Invalid email address"),
+      password: (val) =>
+        val.length < 6 ? "Password must be at least 6 characters" : null,
+      ...(mode === "register"
+        ? {
+            terms: (v: boolean) => (v ? null : "You must accept the terms"),
+          }
+        : {}),
+    },
+  });
+
+  // REGISTER
+  const registerMutation = useMutation({
+    mutationFn: async (values: {
       email: string;
       name: string;
       password: string;
-    }
-  >({
-    mutationFn: async (values) => {
+    }) => {
       const res = await query(REGISTER_CUSTOMER_ACCOUNT, {
         input: {
           emailAddress: values.email,
@@ -75,91 +89,74 @@ export function AuthenticationForm(props: PaperProps) {
           password: values.password,
         },
       });
-      return res.data.registerCustomerAccount as RegisterResponse;
+      return res.data.registerCustomerAccount as RegisterResult;
     },
   });
 
-  const loginMutation = useMutation<
-    LoginResponse,
-    Error,
-    { email: string; password: string }
-  >({
-    mutationFn: async (values) => {
+  // LOGIN
+  const loginMutation = useMutation({
+    mutationFn: async (values: { email: string; password: string }) => {
       const res = await query(LOGIN, {
         username: values.email,
         password: values.password,
+        rememberMe: true,
       });
-      return res.data.login as LoginResponse;
+      return res.data.login as LoginResult;
+    },
+    onSuccess: async (result) => {
+      if (result.__typename === "CurrentUser") {
+        // token was already captured by your query() via response header
+        await refresh(); // confirm token + hydrate user/customer
+        navigate({ to: redirectTo }); // then go where the user intended
+      }
     },
   });
 
-  const [type, toggle] = useToggle(["login", "register"]);
-  const form = useForm({
-    initialValues: {
-      email: "",
-      name: "",
-      password: "",
-      terms: true,
-    },
-
-    validate: {
-      email: (val) => (/^\S+@\S+$/.test(val) ? null : "Invalid email"),
-      password: (val) =>
-        val.length <= 6
-          ? "Password should include at least 6 characters"
-          : null,
-    },
+  const onSubmit = form.onSubmit(async (values) => {
+    if (mode === "register") {
+      const res = await registerMutation.mutateAsync(values);
+      if (res.__typename === "Success" && "success" in res && res.success) {
+        // Inform and switch to login mode
+        // (You can swap with Mantine notifications if you use them)
+        form.reset();
+        toggleMode();
+      } else {
+        // surface error
+        form.setErrors({
+          email:
+            "message" in res && typeof res.message === "string"
+              ? res.message
+              : "Registration failed",
+        });
+      }
+    } else {
+      const res = await loginMutation.mutateAsync({
+        email: values.email,
+        password: values.password,
+      });
+      if (res.__typename !== "CurrentUser") {
+        form.setFieldError("password", res.message ?? "Invalid credentials");
+      }
+    }
   });
 
   return (
     <Paper radius="md" p="lg" withBorder {...props}>
-      <Text ta="center" size="lg" fw={500}>
-        {type}
+      <Text ta="center" size="lg" fw={600}>
+        {upperFirst(mode)}
       </Text>
 
-      <Group grow mb="md" mt="md">
-        <GoogleButton radius="xl">Google</GoogleButton>
-        <TwitterButton radius="xl">Twitter</TwitterButton>
-      </Group>
+      <Divider label="Use your email" labelPosition="center" my="lg" />
 
-      <Divider label="Or" labelPosition="center" my="lg" />
-
-      <form
-        onSubmit={form.onSubmit(async (values) => {
-          if (type === "register") {
-            registerMutation.mutate(values, {
-              onSuccess: (data) => {
-                if (isRegisterSuccess(data)) {
-                  alert(
-                    "🎉 Account created! Please check your email to verify.",
-                  );
-                  toggle(); // switch back to login
-                } else {
-                  alert(data.message ?? "Error");
-                }
-              },
-            });
-          } else {
-            loginMutation.mutate(values, {
-              onSuccess: (data) => {
-                if (isLoginSuccess(data)) {
-                  alert(`Welcome back ${data.identifier}!`);
-                } else {
-                  alert(data.message ?? "Invalid credentials");
-                }
-              },
-            });
-          }
-        })}
-      >
+      <form onSubmit={onSubmit}>
         <Stack>
-          {type === "register" && (
+          {mode === "register" && (
             <TextInput
               label="Name"
-              placeholder="Your name"
+              placeholder="Jane Doe"
               value={form.values.name}
-              onChange={(event) =>
-                form.setFieldValue("name", event.currentTarget.value)
+              onChange={(e) =>
+                form.setFieldValue("name", e.currentTarget.value)
               }
               radius="md"
             />
@@ -168,37 +165,37 @@ export function AuthenticationForm(props: PaperProps) {
           <TextInput
             required
             label="Email"
-            placeholder="hello@mantine.dev"
+            placeholder="you@example.com"
             value={form.values.email}
-            onChange={(event) =>
-              form.setFieldValue("email", event.currentTarget.value)
-            }
-            error={form.errors.email && "Invalid email"}
+            onChange={(e) => form.setFieldValue("email", e.currentTarget.value)}
+            error={form.errors.email}
             radius="md"
+            autoComplete="email"
           />
 
           <PasswordInput
             required
             label="Password"
-            placeholder="Your password"
+            placeholder="••••••••"
             value={form.values.password}
-            onChange={(event) =>
-              form.setFieldValue("password", event.currentTarget.value)
+            onChange={(e) =>
+              form.setFieldValue("password", e.currentTarget.value)
             }
-            error={
-              form.errors.password &&
-              "Password should include at least 6 characters"
-            }
+            error={form.errors.password}
             radius="md"
+            autoComplete={
+              mode === "login" ? "current-password" : "new-password"
+            }
           />
 
-          {type === "register" && (
+          {mode === "register" && (
             <Checkbox
               label="I accept terms and conditions"
               checked={form.values.terms}
-              onChange={(event) =>
-                form.setFieldValue("terms", event.currentTarget.checked)
+              onChange={(e) =>
+                form.setFieldValue("terms", e.currentTarget.checked)
               }
+              error={form.errors.terms as string | undefined}
             />
           )}
         </Stack>
@@ -208,39 +205,41 @@ export function AuthenticationForm(props: PaperProps) {
             component="button"
             type="button"
             c="dimmed"
-            onClick={() => toggle()}
+            onClick={() => {
+              // reset errors when switching modes
+              form.clearErrors();
+              toggleMode();
+            }}
             size="xs"
           >
-            {type === "register"
-              ? "Already have an account? Login"
+            {mode === "register"
+              ? "Already have an account? Log in"
               : "Don't have an account? Register"}
           </Anchor>
+
           <Button
             type="submit"
             radius="xl"
             loading={registerMutation.isPending || loginMutation.isPending}
+            disabled={
+              registerMutation.isPending ||
+              loginMutation.isPending ||
+              !!Object.values(form.errors).find(Boolean)
+            }
           >
-            {upperFirst(type)}
+            {upperFirst(mode)}
           </Button>
         </Group>
 
-        {(registerMutation.isError || loginMutation.isError) && (
+        {/* Inline status messages */}
+        {registerMutation.isError && (
           <Text c="red" size="sm" mt="sm">
-            {(registerMutation.error as Error)?.message ??
-              (loginMutation.error as Error)?.message}
+            {(registerMutation.error as Error)?.message ?? "Registration error"}
           </Text>
         )}
-
-        {registerMutation.isSuccess &&
-          isRegisterSuccess(registerMutation.data) && (
-            <Text c="green" size="sm" mt="sm">
-              🎉 Account created! Please check your email to verify.
-            </Text>
-          )}
-
-        {loginMutation.isSuccess && isLoginSuccess(loginMutation.data) && (
-          <Text c="green" size="sm" mt="sm">
-            Welcome back {loginMutation.data.identifier}!
+        {loginMutation.isError && (
+          <Text c="red" size="sm" mt="sm">
+            {(loginMutation.error as Error)?.message ?? "Login error"}
           </Text>
         )}
       </form>

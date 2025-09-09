@@ -1,9 +1,14 @@
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
-import { button } from "@/components/ui/button";
-
+import { Button } from "@/components/ui/button";
+import { ActionToggle } from "@/components/mantine/ActionToggle";
 export const Route = createLazyFileRoute("/_layout/")({
   component: Index,
 });
+
+// TODO: Gracie Idea add / create a "booktok" integration.
+// TODO: Move Ready to start your collection to the hero/top of page.
+// focus on building the collection / community a and then make it easy to buy/sell those items in your collection. Focus on special editions etc.
+// make make a tool that does "missing from collection".
 
 function Index() {
   return (
@@ -15,13 +20,14 @@ function Index() {
       >
         <h1 className="text-4xl md:text-6xl font-bold mb-4">
           Hero Section with Branding / Tagline
+          <ActionToggle />
         </h1>
         <p className="text-lg md:text-xl mb-8">
           Catchy one-liner that explains NEB’s value.
         </p>
-        <button className="bg-white text-emerald-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+        <Button className="bg-white text-emerald-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
           <Link to="/products">Browse Products</Link>
-        </button>
+        </Button>
       </section>
 
       {/* Brands / Collections */}

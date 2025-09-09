@@ -82,3 +82,23 @@ export const GET_FACETS = /* GraphQL */ `
     }
   }
 `;
+
+export const ME_QUERY = /* GraphQL */ `
+  query Me {
+    me {
+      id
+      identifier
+    }
+  }
+`;
+
+export const ACTIVE_CUSTOMER_QUERY = /* GraphQL */ `
+  query ActiveCustomer {
+    activeCustomer {
+      id
+      firstName
+      lastName
+      emailAddress
+    }
+  }
+`;
