@@ -1,6 +1,8 @@
 import { Box, Group, Burger, Text } from "@mantine/core";
 import { SearchBar } from "../ui/SearchBar";
 import { AccountButton } from "./AccountButton";
+import { MessagesButton } from "./MessagesButton";
+import { LightDarkToggle } from "./LightDark";
 
 export function HeaderBar({
   drawerOpened,
@@ -38,7 +40,9 @@ export function HeaderBar({
       </Box>
 
       {/* Account */}
+      <MessagesButton />
       <AccountButton user={user} onLogout={onLogout} />
+      <LightDarkToggle />
 
       {/* Mobile burger */}
       <Burger opened={drawerOpened} onClick={onToggleDrawer} hiddenFrom="sm" />

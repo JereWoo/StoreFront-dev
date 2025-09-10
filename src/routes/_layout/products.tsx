@@ -19,9 +19,15 @@ import { FilterModal } from "@/components/ui/filtermodal.tsx";
 
 export const Route = createFileRoute("/_layout/products")({
   component: RouteComponent,
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      query: typeof search.query === "string" ? search.query : "",
+    };
+  },
 });
 
 function RouteComponent() {
+  const { query: term } = Route.useSearch();
   // Track facet filters (facetValueIds from modal)
   const [filters, setFilters] = useState<string[]>([]);
   // TODO: const [term] = useState(""); // later: add search box
@@ -36,7 +42,7 @@ function RouteComponent() {
     queryFn: async () => {
       const res = await query(SEARCH_PRODUCTS, {
         input: {
-          term: "",
+          term,
           skip,
           take,
           groupByProduct: true,
