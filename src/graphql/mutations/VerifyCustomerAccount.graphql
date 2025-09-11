@@ -1,0 +1,13 @@
+mutation VerifyCustomerAccount($token: String!) {
+    verifyCustomerAccount(token: $token) {
+        __typename
+        ... on CurrentUser {
+            id
+            identifier
+        }
+        ... on ErrorResult {
+            message
+            errorCode
+        }
+    }
+}

@@ -1,6 +1,6 @@
 import { createLazyFileRoute, Link } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
-import { ActionToggle } from "@/components/mantine/ActionToggle";
+import { Button } from "@/components/ui/9ui/button";
+import { ActionToggle } from "@/components/ui/mantine/ActionToggle";
 export const Route = createLazyFileRoute("/_layout/")({
   component: Index,
 });

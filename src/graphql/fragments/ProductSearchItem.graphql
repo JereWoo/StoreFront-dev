@@ -1,0 +1,8 @@
+fragment ProductSearchItem on SearchResult {
+    productId
+    productName
+    slug
+    productAsset {
+        preview
+    }
+}

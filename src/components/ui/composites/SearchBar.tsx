@@ -1,5 +1,5 @@
 // src/components/ui/SearchBar.tsx
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/9ui/input";
 import { IconSearch } from "@tabler/icons-react";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";

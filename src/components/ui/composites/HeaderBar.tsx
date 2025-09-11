@@ -1,5 +1,5 @@
 import { Box, Group, Burger, Text } from "@mantine/core";
-import { SearchBar } from "../ui/SearchBar";
+import { SearchBar } from "./SearchBar";
 import { AccountButton } from "./AccountButton";
 import { MessagesButton } from "./MessagesButton";
 import { LightDarkToggle } from "./LightDark";

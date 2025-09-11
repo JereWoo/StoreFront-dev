@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/9ui/button";
 import { Filter } from "lucide-react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { FacetMenu } from "@/components/ui/facetmenu";
+} from "@/components/ui/9ui/dialog";
+import { FacetMenu } from "@/components/ui/composites/facetmenu";
 
 type FilterModalProps = {
   onApply: (ids: string[]) => void; // ⬅️ NEW prop to send selected IDs up

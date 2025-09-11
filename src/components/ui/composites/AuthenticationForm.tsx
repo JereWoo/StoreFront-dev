@@ -1,4 +1,11 @@
 import {
+  useLoginMutation,
+  useRegisterCustomerAccountMutation,
+} from "@/generated/hooks";
+import { useAuth } from "@/lib/vendure/AuthState";
+import { useForm } from "@mantine/form";
+import { useNavigate } from "@tanstack/react-router";
+import {
   Anchor,
   Button,
   Checkbox,
@@ -11,41 +18,7 @@ import {
   Text,
   TextInput,
 } from "@mantine/core";
-import { useForm } from "@mantine/form";
 import { upperFirst, useToggle } from "@mantine/hooks";
-import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
-import { query } from "@/lib/vendure/client";
-import { REGISTER_CUSTOMER_ACCOUNT, LOGIN } from "@/lib/vendure/mutations";
-import { useAuth } from "@/lib/vendure/AuthState";
-
-// ---------- Types that match Vendure responses ----------
-
-type CurrentUser = {
-  __typename: "CurrentUser";
-  id: string;
-  identifier: string;
-};
-
-type LoginErrorName =
-  | "InvalidCredentialsError"
-  | "NotVerifiedError"
-  | "NativeAuthStrategyError"
-  | "ErrorResult";
-
-type LoginError = {
-  __typename: LoginErrorName;
-  message: string;
-  errorCode?: string;
-};
-
-type LoginResult = CurrentUser | LoginError;
-
-type RegisterResult =
-  | { __typename: "Success"; success: boolean }
-  | { __typename: string; message: string; errorCode?: string };
-
-// ---------- Component ----------
 
 export function AuthenticationForm(props: PaperProps) {
   const [mode, toggleMode] = useToggle<"login" | "register">([
@@ -74,14 +47,22 @@ export function AuthenticationForm(props: PaperProps) {
     },
   });
 
-  // REGISTER
-  const registerMutation = useMutation({
-    mutationFn: async (values: {
-      email: string;
-      name: string;
-      password: string;
-    }) => {
-      const res = await query(REGISTER_CUSTOMER_ACCOUNT, {
+  // REGISTER (generated hook)
+  const registerMutation = useRegisterCustomerAccountMutation();
+
+  // LOGIN (generated hook)
+  const loginMutation = useLoginMutation({
+    onSuccess: async (result) => {
+      if (result.login.__typename === "CurrentUser") {
+        await refresh();
+        navigate({ to: redirectTo });
+      }
+    },
+  });
+
+  const onSubmit = form.onSubmit(async (values) => {
+    if (mode === "register") {
+      const res = await registerMutation.mutateAsync({
         input: {
           emailAddress: values.email,
           firstName: values.name?.split(" ")[0] ?? "",
@@ -89,53 +70,28 @@ export function AuthenticationForm(props: PaperProps) {
           password: values.password,
         },
       });
-      return res.data.registerCustomerAccount as RegisterResult;
-    },
-  });
-
-  // LOGIN
-  const loginMutation = useMutation({
-    mutationFn: async (values: { email: string; password: string }) => {
-      const res = await query(LOGIN, {
-        username: values.email,
-        password: values.password,
-        rememberMe: true,
-      });
-      return res.data.login as LoginResult;
-    },
-    onSuccess: async (result) => {
-      if (result.__typename === "CurrentUser") {
-        // token was already captured by your query() via response header
-        await refresh(); // confirm token + hydrate user/customer
-        navigate({ to: redirectTo }); // then go where the user intended
-      }
-    },
-  });
-
-  const onSubmit = form.onSubmit(async (values) => {
-    if (mode === "register") {
-      const res = await registerMutation.mutateAsync(values);
-      if (res.__typename === "Success" && "success" in res && res.success) {
-        // Inform and switch to login mode
-        // (You can swap with Mantine notifications if you use them)
+      if (res.registerCustomerAccount.__typename === "Success") {
         form.reset();
         toggleMode();
       } else {
-        // surface error
         form.setErrors({
           email:
-            "message" in res && typeof res.message === "string"
-              ? res.message
+            "message" in res.registerCustomerAccount
+              ? res.registerCustomerAccount.message
               : "Registration failed",
         });
       }
     } else {
       const res = await loginMutation.mutateAsync({
-        email: values.email,
+        username: values.email,
         password: values.password,
+        rememberMe: true,
       });
-      if (res.__typename !== "CurrentUser") {
-        form.setFieldError("password", res.message ?? "Invalid credentials");
+      if (res.login.__typename !== "CurrentUser") {
+        form.setFieldError(
+          "password",
+          "message" in res.login ? res.login.message : "Invalid credentials",
+        );
       }
     }
   });
@@ -206,7 +162,6 @@ export function AuthenticationForm(props: PaperProps) {
             type="button"
             c="dimmed"
             onClick={() => {
-              // reset errors when switching modes
               form.clearErrors();
               toggleMode();
             }}
@@ -231,7 +186,6 @@ export function AuthenticationForm(props: PaperProps) {
           </Button>
         </Group>
 
-        {/* Inline status messages */}
         {registerMutation.isError && (
           <Text c="red" size="sm" mt="sm">
             {(registerMutation.error as Error)?.message ?? "Registration error"}

@@ -8,9 +8,9 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "@/css/HeaderMegaMenu.module.css";
-import { HeaderBar } from "./HeaderBar";
-import { NavBar } from "./NavBar";
-import { MobileDrawer } from "./MobileDrawer";
+import { HeaderBar } from "@/components/ui/composites/HeaderBar";
+import { NavBar } from "@/components/ui/composites/NavBar";
+import { MobileDrawer } from "@/components/ui/composites/MobileDrawer";
 import {
   IconBook,
   IconChartPie3,

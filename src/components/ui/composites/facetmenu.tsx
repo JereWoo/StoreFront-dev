@@ -1,37 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
-import { query } from "@/lib/vendure/client";
-import { GET_FACETS } from "@/lib/vendure/queries";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { useGetFacetsQuery } from "@/generated/hooks";
+import { Facet, FacetValue } from "@/generated/graphql"; // auto-types
 
 type FacetMenuProps = {
   selected: string[];
   onChange: (ids: string[]) => void;
 };
 
-type FacetValue = {
-  id: string;
-  name: string;
-};
-
-type Facet = {
-  id: string;
-  name: string;
-  values: FacetValue[];
-};
-
 export function FacetMenu({ selected, onChange }: FacetMenuProps) {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["facets"],
-    queryFn: () => query(GET_FACETS).then((res) => res.data),
-  });
+  const { data, isLoading, error } = useGetFacetsQuery();
 
   const [active, setActive] = useState<string | null>(null);
 
   if (isLoading) return <p>Loading facets…</p>;
   if (error) return <p>Failed to load facets</p>;
 
-  const facets = data.facets.items;
+  const facets = data?.facets.items ?? [];
 
   const toggleValue = (id: string) => {
     onChange(
@@ -68,7 +53,7 @@ export function FacetMenu({ selected, onChange }: FacetMenuProps) {
         {active && (
           <div className="space-y-2">
             {facets
-              .find((f: Facet) => f.id === active)
+              .find((f) => f.id === active)
               ?.values.map((val: FacetValue) => (
                 <label key={val.id} className="flex items-center gap-2">
                   <input

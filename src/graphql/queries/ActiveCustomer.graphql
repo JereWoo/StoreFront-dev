@@ -1,0 +1,8 @@
+query ActiveCustomer {
+    activeCustomer {
+        id
+        emailAddress
+        firstName
+        lastName
+    }
+}

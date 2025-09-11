@@ -12,7 +12,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons-react";
-import classes from "../../css/HeaderMegaMenu.module.css";
+import classes from "@/css/HeaderMegaMenu.module.css";
 
 export function NavBar({ links }: { links: React.ReactNode }) {
   const theme = useMantineTheme();

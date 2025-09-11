@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "lint": "biome lint",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "husky",
+    "graphql-codegen": "graphql-codegen -r ts-node/register"
   },
   "dependencies": {
     "@base-ui-components/react": "^1.0.0-beta.3",
@@ -24,6 +25,7 @@
     "axios": "^1.6.7",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "graphql": "^16.11.0",
     "lucide-react": "^0.542.0",
     "react": "^19.1.1",
     "react-day-picker": "^9.9.0",
@@ -34,6 +36,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.3",
+    "@graphql-codegen/cli": "^6.0.0",
+    "@graphql-codegen/typescript-react-query": "^6.1.1",
     "@tailwindcss/postcss": "^4.1.13",
     "@tanstack/router-devtools": "^1.15.19",
     "@tanstack/router-vite-plugin": "^1.15.20",
@@ -48,7 +52,9 @@
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.6.2",
     "tailwindcss": "^4.1.13",
-    "typescript": "^5.2.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2",
+    "undefined": "^0.1.0",
     "vite": "^7.1.4"
   },
   "lint-staged": {
