@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 
 import {
@@ -14,7 +14,7 @@ import { ToggleGroup } from "@/components/ui/9ui/toggle-group";
 import { Toggle } from "@/components/ui/9ui/toggle";
 
 import { useSearchProductsQuery } from "@/generated/hooks";
-import { ProductSearchItemFragment } from "@/generated/graphql"; // typed fragment
+import { ProductSearchItemFieldsFragment } from "@/generated/graphql"; // typed fragment
 
 export const Route = createFileRoute("/_layout/products")({
   component: RouteComponent,
@@ -25,23 +25,38 @@ export const Route = createFileRoute("/_layout/products")({
   },
 });
 
-function ProductTile({ p }: { p: ProductSearchItemFragment }) {
+export function ProductTile({ p }: { p: ProductSearchItemFieldsFragment }) {
   return (
-    <div className="border rounded-lg p-3 hover:shadow-md">
-      <img
-        src={`${p.productAsset?.preview}?preset=large`}
-        alt={p.productName}
-        className="w-full h-40 object-contain"
-      />
-      <div className="mt-2 font-medium line-clamp-2">{p.productName}</div>
-      <div className="text-sm text-gray-500">Slug: {p.slug}</div>
-      <div className="mt-1 font-bold">$—</div>
-      <div className="text-xs text-gray-400">USA</div>
-    </div>
+    <Link
+      to="/listing/$id"
+      params={{ id: p.productId, slug: p.slug }}
+      className="block border rounded-lg overflow-hidden hover:shadow-lg transition-shadow bg-white"
+    >
+      {/* Image */}
+      <div className="aspect-square w-full bg-gray-50 flex items-center justify-center">
+        <img
+          src={`${p.productAsset?.preview}?preset=large`}
+          alt={p.productName}
+          className="max-h-full max-w-full object-contain"
+        />
+      </div>
+
+      {/* Details */}
+      <div className="p-3">
+        <div className="font-medium text-sm line-clamp-2">{p.productName}</div>
+        <div className="text-xs text-gray-500 mb-1">{p.slug}</div>
+        <div className="flex items-center justify-between">
+          <span className="font-bold text-emerald-700">
+            ${Math.floor(Math.random() * 100) + 10}
+          </span>
+          <span className="text-xs text-gray-400">USA</span>
+        </div>
+      </div>
+    </Link>
   );
 }
 
-function ProductRow({ p }: { p: ProductSearchItemFragment }) {
+function ProductRow({ p }: { p: ProductSearchItemFieldsFragment }) {
   return (
     <div className="flex items-center gap-4 border-b py-3 hover:bg-gray-50">
       <img

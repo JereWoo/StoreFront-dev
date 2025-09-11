@@ -2,7 +2,7 @@ query SearchProducts($input: SearchInput!) {
     search(input: $input) {
         totalItems
         items {
-            ...ProductSearchItem
+            ...ProductSearchItemFields
         }
     }
 }

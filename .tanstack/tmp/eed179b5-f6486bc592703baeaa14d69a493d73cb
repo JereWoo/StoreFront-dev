@@ -1,0 +1,24 @@
+import { createFileRoute, useParams } from "@tanstack/react-router";
+import { useProductByIdQuery } from "@/generated/hooks";
+import { Loader } from "@mantine/core";
+
+export const Route = createFileRoute("/_layout/listing/$id/-$slug")({
+  component: ProductDetailPage,
+});
+
+function ProductDetailPage() {
+  const { id } = useParams({ from: Route.id });
+  const { data, isLoading, error } = useProductByIdQuery({ id });
+
+  if (isLoading) return <Loader />;
+  if (error) return <p>Error loading product</p>;
+  if (!data?.product) return <p>Not found</p>;
+
+  return (
+    <div className="container mx-auto p-6">
+      <h1>Product Detail</h1>
+      <h1>{data.product.name}</h1>
+      <p>ID: {id}</p>
+    </div>
+  );
+}

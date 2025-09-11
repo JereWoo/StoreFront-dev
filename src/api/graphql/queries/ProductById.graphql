@@ -1,0 +1,16 @@
+query ProductById($id: ID!) {
+    product(id: $id) {
+        id
+        name
+        slug
+        description
+        featuredAsset {
+            id
+            preview
+        }
+        assets {
+            id
+            preview
+        }
+    }
+}

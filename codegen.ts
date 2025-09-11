@@ -14,7 +14,7 @@ const config: CodegenConfig = {
     "./src/generated/hooks.ts": {
       plugins: ["typescript-react-query"],
       config: {
-        fetcher: "@/lib/vendure/fetcher#vendureFetcher",
+        fetcher: "@/api/vendure/fetcher#vendureFetcher",
         reactQueryVersion: 5,
       },
     },
