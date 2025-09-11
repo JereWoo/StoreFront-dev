@@ -13,8 +13,8 @@ import {
   ActiveCustomerQuery,
   LogoutDocument,
   LogoutMutation,
-} from "@/generated/graphql";
-import { vendureFetcher } from "@/lib/vendure/fetcher";
+} from "@/generated/graphql.ts";
+import { vendureFetcher } from "@/api/vendure/fetcher.ts";
 
 type AuthState =
   | { status: "checking"; user: null; customer: null }

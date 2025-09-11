@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
-import classes from "@/css/HeaderMegaMenu.module.css";
+import classes from "@/styles/HeaderMegaMenu.module.css";
 
 export function MobileDrawer({
   opened,

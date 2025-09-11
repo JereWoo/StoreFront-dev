@@ -4,7 +4,7 @@ import {
   IconBrandYoutube,
 } from "@tabler/icons-react";
 import { ActionIcon, Container, Group, Text } from "@mantine/core";
-import classes from "@/css/FooterLinks.module.css";
+import classes from "@/styles/FooterLinks.module.css";
 
 const data = [
   {

@@ -2,7 +2,7 @@ import {
   useLoginMutation,
   useRegisterCustomerAccountMutation,
 } from "@/generated/hooks";
-import { useAuth } from "@/lib/vendure/AuthState";
+import { useAuth } from "@/api/vendure/AuthState";
 import { useForm } from "@mantine/form";
 import { useNavigate } from "@tanstack/react-router";
 import {

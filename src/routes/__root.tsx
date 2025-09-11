@@ -5,7 +5,7 @@ import "@mantine/core/styles.css";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { AuthProvider } from "@/lib/vendure/AuthState";
+import { AuthProvider } from "@/api/vendure/AuthState";
 
 import { queryClient } from "@/lib/utils";
 

@@ -1,0 +1,28 @@
+fragment ProductDetailFields on Product {
+    id
+    name
+    slug
+    description
+    assets {
+        id
+        preview
+        focalPoint {
+            x
+            y
+        }
+    }
+    collections {
+        id
+        slug
+        name
+    }
+    facetValues {
+        id
+        name
+        code
+        facet {
+            id
+            name
+        }
+    }
+}

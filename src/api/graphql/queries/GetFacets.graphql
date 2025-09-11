@@ -1,5 +1,5 @@
 query GetFacets {
-    facets(options: { take: 20 }) {
+    facets {
         items {
             id
             name

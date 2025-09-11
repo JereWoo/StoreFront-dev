@@ -7,7 +7,7 @@ import {
   UnstyledButton,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import classes from "@/css/HeaderMegaMenu.module.css";
+import classes from "@/styles/HeaderMegaMenu.module.css";
 import { HeaderBar } from "@/components/ui/composites/HeaderBar";
 import { NavBar } from "@/components/ui/composites/NavBar";
 import { MobileDrawer } from "@/components/ui/composites/MobileDrawer";
@@ -19,7 +19,7 @@ import {
   IconFingerprint,
   IconNotification,
 } from "@tabler/icons-react";
-import { useAuth } from "@/lib/vendure/AuthState.tsx";
+import { useAuth } from "@/api/vendure/AuthState.tsx";
 
 const mockdata = [
   {

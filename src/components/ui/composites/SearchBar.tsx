@@ -1,21 +1,24 @@
 // src/components/ui/SearchBar.tsx
 import { Input } from "@/components/ui/9ui/input";
 import { IconSearch } from "@tabler/icons-react";
-import { useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
 
 type SearchBarProps = {
+  value: string;
+  onChange: (val: string) => void;
+  onSubmit?: (val: string) => void;
   placeholder?: string;
 };
 
-export function SearchBar({ placeholder }: SearchBarProps) {
-  const [value, setValue] = useState("");
-  const navigate = useNavigate();
-
+export function SearchBar({
+  value,
+  onChange,
+  onSubmit,
+  placeholder,
+}: SearchBarProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (value.trim()) {
-      navigate({ to: "/products", search: { query: value.trim() } });
+    if (value.trim() && onSubmit) {
+      onSubmit(value.trim());
     }
   };
 
@@ -25,7 +28,7 @@ export function SearchBar({ placeholder }: SearchBarProps) {
       <Input
         type="text"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder ?? "Search..."}
         className="rounded-full pl-10 pr-5 py-2"
       />

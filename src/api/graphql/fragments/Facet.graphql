@@ -1,0 +1,8 @@
+fragment FacetFields on Facet {
+    id
+    name
+    values {
+        id
+        name
+    }
+}

@@ -6,13 +6,11 @@ import {
   Divider,
   SimpleGrid,
   Text,
-  ThemeIcon,
-  UnstyledButton,
   Center,
   useMantineTheme,
 } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons-react";
-import classes from "@/css/HeaderMegaMenu.module.css";
+import classes from "@/styles/HeaderMegaMenu.module.css";
 
 export function NavBar({ links }: { links: React.ReactNode }) {
   const theme = useMantineTheme();

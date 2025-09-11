@@ -1,8 +1,9 @@
-fragment ProductSearchItem on SearchResult {
+fragment ProductSearchItemFields on SearchResult {
     productId
     productName
     slug
     productAsset {
+        id
         preview
     }
 }

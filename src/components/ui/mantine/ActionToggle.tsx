@@ -6,7 +6,7 @@ import {
   useComputedColorScheme,
   useMantineColorScheme,
 } from "@mantine/core";
-import classes from "@/css/ActionToggle.module.css";
+import classes from "@/styles/ActionToggle.module.css";
 
 export function ActionToggle() {
   const { setColorScheme } = useMantineColorScheme();

@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { useGetFacetsQuery } from "@/generated/hooks";
-import { Facet, FacetValue } from "@/generated/graphql"; // auto-types
+import { GetFacetsQuery } from "@/generated/graphql";
 
 type FacetMenuProps = {
   selected: string[];
@@ -10,13 +10,12 @@ type FacetMenuProps = {
 
 export function FacetMenu({ selected, onChange }: FacetMenuProps) {
   const { data, isLoading, error } = useGetFacetsQuery();
-
   const [active, setActive] = useState<string | null>(null);
 
   if (isLoading) return <p>Loading facets…</p>;
   if (error) return <p>Failed to load facets</p>;
 
-  const facets = data?.facets.items ?? [];
+  const facets: GetFacetsQuery["facets"]["items"] = data?.facets.items ?? [];
 
   const toggleValue = (id: string) => {
     onChange(
@@ -31,7 +30,7 @@ export function FacetMenu({ selected, onChange }: FacetMenuProps) {
       {/* Left: categories */}
       <div className="w-48 border-r pr-2">
         <ul className="space-y-2">
-          {facets.map((facet: Facet) => (
+          {facets.map((facet) => (
             <li
               key={facet.id}
               onClick={() => setActive(facet.id)}
@@ -54,7 +53,7 @@ export function FacetMenu({ selected, onChange }: FacetMenuProps) {
           <div className="space-y-2">
             {facets
               .find((f) => f.id === active)
-              ?.values.map((val: FacetValue) => (
+              ?.values.map((val) => (
                 <label key={val.id} className="flex items-center gap-2">
                   <input
                     type="checkbox"

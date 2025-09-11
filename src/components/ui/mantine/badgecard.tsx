@@ -8,7 +8,7 @@ import {
   Image,
   Text,
 } from "@mantine/core";
-import classes from "@/css/BadgeCard.module.css";
+import classes from "@/styles/BadgeCard.module.css";
 
 type BadgeCardProps = {
   image: string;

@@ -3,6 +3,8 @@ import { SearchBar } from "./SearchBar";
 import { AccountButton } from "./AccountButton";
 import { MessagesButton } from "./MessagesButton";
 import { LightDarkToggle } from "./LightDark";
+import { useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 
 export function HeaderBar({
   drawerOpened,
@@ -15,6 +17,9 @@ export function HeaderBar({
   user: { id: string; email: string } | null;
   onLogout: () => void;
 }) {
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+
   return (
     <Group justify="space-between" h="100%" px="md" py="4">
       {/* Logo */}
@@ -31,10 +36,12 @@ export function HeaderBar({
 
       {/* Search */}
       <Box className="flex-1 hidden sm:flex justify-center">
-        {/* wire your state into this component as needed */}
         <SearchBar
-          value={"searchTerm"}
-          onChange={"setSearchTerm"}
+          value={searchTerm}
+          onChange={setSearchTerm}
+          onSubmit={(val) =>
+            navigate({ to: "/products", search: { query: val } })
+          }
           placeholder="Search books..."
         />
       </Box>

@@ -13,10 +13,10 @@
   "aliases": {
     "components": "@/components",
     "utils": "@/lib/utils",
-    "ui": "@/components/ui",
+    "ui": "@/components/ui/9ui",
     "lib": "@/lib",
     "hooks": "@/hooks"
   },
-  "iconLibrary": "lucide",
+  "iconLibrary": "tabler",
   "registries": {"@9ui": "https://9ui.dev/r/{name}.json"}
 }

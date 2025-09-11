@@ -1,0 +1,25 @@
+fragment OrderSummaryFields on Order {
+    id
+    code
+    state
+    currencyCode
+    totalWithTax
+    lines {
+        id
+        quantity
+        linePriceWithTax
+        productVariant {
+            id
+            name
+            sku
+            product {
+                id
+                name
+            }
+            featuredAsset {
+                id
+                preview
+            }
+        }
+    }
+}
