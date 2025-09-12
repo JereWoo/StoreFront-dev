@@ -16,6 +16,7 @@ const config: CodegenConfig = {
       config: {
         fetcher: "@/api/vendure/fetcher#vendureFetcher",
         reactQueryVersion: 5,
+        omitOperationVariablesIfEmpty: true,
       },
     },
   },

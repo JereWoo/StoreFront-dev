@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/9ui/button";
 import { FloatingInput } from "./FloatingInput";
 import { PhoneInput } from "@/components/ui/9ui/phone-input"; // adjust path if needed
+import { Checkbox } from "@/components/ui/9ui/checkbox";
+import { Label } from "@/components/ui/9ui/label";
 
 export type AddressFormValues = {
   firstName: string;
@@ -13,6 +15,8 @@ export type AddressFormValues = {
   postalCode: string;
   countryCode: string;
   phoneNumber?: string;
+  saveForLater?: boolean;
+  makeDefault?: boolean;
 };
 
 type AddressFormProps = {
@@ -143,6 +147,28 @@ export function AddressForm({
       <Button type="submit" className="w-full mt-2">
         {submitLabel}
       </Button>
+
+      <div className="mt-4 space-y-2">
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id="saveForLater"
+            checked={values.saveForLater ?? false}
+            onCheckedChange={(checked: boolean) =>
+              setValues((prev) => ({ ...prev, saveForLater: !!checked }))
+            }
+          />
+          <Label htmlFor="saveForLater">Save address for later</Label>
+
+          <Checkbox
+            id="makeDefault"
+            checked={values.makeDefault ?? false}
+            onCheckedChange={(checked: boolean) =>
+              setValues((prev) => ({ ...prev, makeDefault: !!checked }))
+            }
+          />
+          <Label htmlFor="makeDefault">Set as default shipping address</Label>
+        </div>
+      </div>
     </form>
   );
 }

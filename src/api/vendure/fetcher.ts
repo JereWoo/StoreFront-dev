@@ -65,7 +65,10 @@ export const vendureFetcher =
     const { data, errors } = await res.json();
 
     if (import.meta.env.DEV) {
-      console.debug("[VendureFetcher] Response", { data, errors });
+      console.debug("[VendureFetcher] POST", endpoint, {
+        query: queryString,
+        variables,
+      });
     }
 
     if (errors?.length) {
