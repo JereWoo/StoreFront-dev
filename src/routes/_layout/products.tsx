@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/composites/pagination";
 import { usePagination } from "@/lib/usePagination";
 import { FilterModal } from "@/components/ui/composites/filtermodal.tsx";
-import { ToggleGroup } from "@/components/ui/9ui/toggle-group";
 import { Toggle } from "@/components/ui/9ui/toggle";
 
 import { useSearchProductsQuery } from "@/generated/hooks";
@@ -73,6 +72,8 @@ function ProductRow({ p }: { p: ProductSearchItemFieldsFragment }) {
   );
 }
 
+import { LayoutGrid, List } from "lucide-react"; // if you prefer Lucide icons
+
 function RouteComponent() {
   const { query: term } = Route.useSearch();
   const [filters, setFilters] = useState<string[]>([]);
@@ -113,15 +114,20 @@ function RouteComponent() {
     <div className="container mx-auto p-6 space-y-6">
       <FilterModal onApply={setFilters} />
 
-      <ToggleGroup
-        type="single"
-        value={view}
-        onValueChange={(v) => v && setView(v as "grid" | "list")}
-        className="flex gap-2"
+      {/* Single toggle button with icon */}
+      <Toggle
+        pressed
+        onPressedChange={() => setView(view === "grid" ? "list" : "grid")}
+        aria-label="Toggle view"
       >
-        <Toggle value="grid">Grid</Toggle>
-        <Toggle value="list">List</Toggle>
-      </ToggleGroup>
+        {view === "grid" ? (
+          // grid icon
+          <LayoutGrid className="h-4 w-4" />
+        ) : (
+          // list icon
+          <List className="h-4 w-4" />
+        )}
+      </Toggle>
 
       {items.length === 0 ? (
         <p>No products found for these filters.</p>

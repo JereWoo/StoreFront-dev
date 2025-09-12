@@ -4,13 +4,16 @@ query ProductById($id: ID!) {
         name
         slug
         description
-        featuredAsset {
+        featuredAsset { id preview }
+        assets { id preview }
+        variants {
             id
-            preview
-        }
-        assets {
-            id
-            preview
+            productId
+            name
+            sku
+            priceWithTax
+            currencyCode
+            stockLevel
         }
     }
 }
