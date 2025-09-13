@@ -1,6 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { DemoForm } from "@/components/ui/mantine/demoform";
+import { AuthProvider } from "@/features/auth/services/AuthProvider";
+import { AuthButton } from "@/features/auth/components/AuthButton.tsx";
 
 export const Route = createFileRoute("/_layout/demo")({
-  component: DemoForm,
+  component: DemoPage,
 });
+
+function DemoPage() {
+  return (
+    <AuthProvider>
+      <div className="flex h-screen items-center justify-center">
+        <AuthButton />
+      </div>
+    </AuthProvider>
+  );
+}

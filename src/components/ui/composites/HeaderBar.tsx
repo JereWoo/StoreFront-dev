@@ -5,6 +5,7 @@ import { MessagesButton } from "./MessagesButton";
 import { LightDarkToggle } from "./LightDark";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { AuthButton } from "@/features/auth";
 
 export function HeaderBar({
   drawerOpened,
@@ -48,7 +49,8 @@ export function HeaderBar({
 
       {/* Account */}
       <MessagesButton />
-      <AccountButton user={user} onLogout={onLogout} />
+      <AuthButton />
+      {/*  <AccountButton user={user} onLogout={onLogout} />*/}
       <LightDarkToggle />
 
       {/* Mobile burger */}

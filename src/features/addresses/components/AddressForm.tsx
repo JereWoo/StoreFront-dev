@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/9ui/button";
-import { FloatingInput } from "./FloatingInput";
-import { PhoneInput } from "@/components/ui/9ui/phone-input"; // adjust path if needed
-import { Checkbox } from "@/components/ui/9ui/checkbox";
-import { Label } from "@/components/ui/9ui/label";
+import { Button } from "@/components/ui/9ui/button.tsx";
+import { FloatingInput } from "@/components/ui/composites/FloatingInput.tsx";
+import { PhoneInput } from "@/components/ui/9ui/phone-input.tsx"; // adjust path if needed
+import { Checkbox } from "@/components/ui/9ui/checkbox.tsx";
+import { Label } from "@/components/ui/9ui/label.tsx";
 
 export type AddressFormValues = {
   firstName: string;

@@ -19,7 +19,8 @@ import {
   IconFingerprint,
   IconNotification,
 } from "@tabler/icons-react";
-import { useAuth } from "@/api/vendure/AuthState.tsx";
+
+import { useAuth } from "@/features/auth";
 
 const mockdata = [
   {
@@ -84,8 +85,8 @@ export function HeaderMegaMenu() {
     useDisclosure(false);
 
   const { status, user, customer, logout } = useAuth();
-  const accountUser = status === "authenticated" ? user : null; // { id, identifier } | null
-  const customerEmail = customer?.emailAddress ?? null; // optional label for the button
+  const accountUser = status === "authenticated" ? user : null;
+  const customerEmail = customer?.emailAddress ?? null;
 
   const links = <FeatureLinks />;
 
@@ -95,9 +96,9 @@ export function HeaderMegaMenu() {
         <HeaderBar
           drawerOpened={drawerOpened}
           onToggleDrawer={toggleDrawer}
-          user={accountUser} // ← pass Vendure `me` shape
-          customerEmail={customerEmail} // ← optional for display
-          onLogout={logout} // ← hook up logout
+          user={accountUser}
+          customerEmail={customerEmail}
+          onLogout={logout}
         />
         <NavBar links={links} />
       </header>

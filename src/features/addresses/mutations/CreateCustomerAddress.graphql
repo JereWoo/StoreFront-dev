@@ -1,0 +1,5 @@
+mutation CreateCustomerAddress($input: CreateAddressInput!) {
+    createCustomerAddress(input: $input) {
+        ...AddressFields
+    }
+}

@@ -1,0 +1,16 @@
+fragment AddressFields on Address {
+    id
+    fullName
+    company
+    streetLine1
+    streetLine2
+    city
+    province
+    postalCode
+    phoneNumber
+    defaultShippingAddress
+    defaultBillingAddress
+    country {
+        code
+    }
+}

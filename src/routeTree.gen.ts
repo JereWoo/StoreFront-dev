@@ -15,10 +15,11 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as AuthVerifyRouteImport } from './routes/auth/verify'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
+import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
 import { Route as LayoutProductsRouteImport } from './routes/_layout/products'
-import { Route as LayoutEnvelopeRouteImport } from './routes/_layout/envelope'
 import { Route as LayoutDemoRouteImport } from './routes/_layout/demo'
 import { Route as LayoutCheckoutRouteImport } from './routes/_layout/checkout'
+import { Route as LayoutSettingsAddressesRouteImport } from './routes/_layout/settings/addresses'
 import { Route as LayoutListingIdRouteImport } from './routes/_layout/listing/$id'
 
 const LayoutIndexLazyRouteImport = createFileRoute('/_layout/')()
@@ -47,14 +48,14 @@ const AuthSignInRoute = AuthSignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => AuthRoute,
 } as any)
+const LayoutSettingsRoute = LayoutSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutProductsRoute = LayoutProductsRouteImport.update({
   id: '/products',
   path: '/products',
-  getParentRoute: () => LayoutRoute,
-} as any)
-const LayoutEnvelopeRoute = LayoutEnvelopeRouteImport.update({
-  id: '/envelope',
-  path: '/envelope',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutDemoRoute = LayoutDemoRouteImport.update({
@@ -67,6 +68,11 @@ const LayoutCheckoutRoute = LayoutCheckoutRouteImport.update({
   path: '/checkout',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutSettingsAddressesRoute = LayoutSettingsAddressesRouteImport.update({
+  id: '/addresses',
+  path: '/addresses',
+  getParentRoute: () => LayoutSettingsRoute,
+} as any)
 const LayoutListingIdRoute = LayoutListingIdRouteImport.update({
   id: '/listing/$id',
   path: '/listing/$id',
@@ -77,23 +83,25 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRouteWithChildren
   '/checkout': typeof LayoutCheckoutRoute
   '/demo': typeof LayoutDemoRoute
-  '/envelope': typeof LayoutEnvelopeRoute
   '/products': typeof LayoutProductsRoute
+  '/settings': typeof LayoutSettingsRouteWithChildren
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/verify': typeof AuthVerifyRoute
   '/': typeof LayoutIndexLazyRoute
   '/listing/$id': typeof LayoutListingIdRoute
+  '/settings/addresses': typeof LayoutSettingsAddressesRoute
 }
 export interface FileRoutesByTo {
   '/auth': typeof AuthRouteWithChildren
   '/checkout': typeof LayoutCheckoutRoute
   '/demo': typeof LayoutDemoRoute
-  '/envelope': typeof LayoutEnvelopeRoute
   '/products': typeof LayoutProductsRoute
+  '/settings': typeof LayoutSettingsRouteWithChildren
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/verify': typeof AuthVerifyRoute
   '/': typeof LayoutIndexLazyRoute
   '/listing/$id': typeof LayoutListingIdRoute
+  '/settings/addresses': typeof LayoutSettingsAddressesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -101,12 +109,13 @@ export interface FileRoutesById {
   '/auth': typeof AuthRouteWithChildren
   '/_layout/checkout': typeof LayoutCheckoutRoute
   '/_layout/demo': typeof LayoutDemoRoute
-  '/_layout/envelope': typeof LayoutEnvelopeRoute
   '/_layout/products': typeof LayoutProductsRoute
+  '/_layout/settings': typeof LayoutSettingsRouteWithChildren
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/verify': typeof AuthVerifyRoute
   '/_layout/': typeof LayoutIndexLazyRoute
   '/_layout/listing/$id': typeof LayoutListingIdRoute
+  '/_layout/settings/addresses': typeof LayoutSettingsAddressesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -114,35 +123,38 @@ export interface FileRouteTypes {
     | '/auth'
     | '/checkout'
     | '/demo'
-    | '/envelope'
     | '/products'
+    | '/settings'
     | '/auth/sign-in'
     | '/auth/verify'
     | '/'
     | '/listing/$id'
+    | '/settings/addresses'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/auth'
     | '/checkout'
     | '/demo'
-    | '/envelope'
     | '/products'
+    | '/settings'
     | '/auth/sign-in'
     | '/auth/verify'
     | '/'
     | '/listing/$id'
+    | '/settings/addresses'
   id:
     | '__root__'
     | '/_layout'
     | '/auth'
     | '/_layout/checkout'
     | '/_layout/demo'
-    | '/_layout/envelope'
     | '/_layout/products'
+    | '/_layout/settings'
     | '/auth/sign-in'
     | '/auth/verify'
     | '/_layout/'
     | '/_layout/listing/$id'
+    | '/_layout/settings/addresses'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -187,18 +199,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignInRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_layout/settings': {
+      id: '/_layout/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof LayoutSettingsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/products': {
       id: '/_layout/products'
       path: '/products'
       fullPath: '/products'
       preLoaderRoute: typeof LayoutProductsRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/envelope': {
-      id: '/_layout/envelope'
-      path: '/envelope'
-      fullPath: '/envelope'
-      preLoaderRoute: typeof LayoutEnvelopeRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/demo': {
@@ -215,6 +227,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutCheckoutRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/settings/addresses': {
+      id: '/_layout/settings/addresses'
+      path: '/addresses'
+      fullPath: '/settings/addresses'
+      preLoaderRoute: typeof LayoutSettingsAddressesRouteImport
+      parentRoute: typeof LayoutSettingsRoute
+    }
     '/_layout/listing/$id': {
       id: '/_layout/listing/$id'
       path: '/listing/$id'
@@ -225,11 +244,23 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface LayoutSettingsRouteChildren {
+  LayoutSettingsAddressesRoute: typeof LayoutSettingsAddressesRoute
+}
+
+const LayoutSettingsRouteChildren: LayoutSettingsRouteChildren = {
+  LayoutSettingsAddressesRoute: LayoutSettingsAddressesRoute,
+}
+
+const LayoutSettingsRouteWithChildren = LayoutSettingsRoute._addFileChildren(
+  LayoutSettingsRouteChildren,
+)
+
 interface LayoutRouteChildren {
   LayoutCheckoutRoute: typeof LayoutCheckoutRoute
   LayoutDemoRoute: typeof LayoutDemoRoute
-  LayoutEnvelopeRoute: typeof LayoutEnvelopeRoute
   LayoutProductsRoute: typeof LayoutProductsRoute
+  LayoutSettingsRoute: typeof LayoutSettingsRouteWithChildren
   LayoutIndexLazyRoute: typeof LayoutIndexLazyRoute
   LayoutListingIdRoute: typeof LayoutListingIdRoute
 }
@@ -237,8 +268,8 @@ interface LayoutRouteChildren {
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCheckoutRoute: LayoutCheckoutRoute,
   LayoutDemoRoute: LayoutDemoRoute,
-  LayoutEnvelopeRoute: LayoutEnvelopeRoute,
   LayoutProductsRoute: LayoutProductsRoute,
+  LayoutSettingsRoute: LayoutSettingsRouteWithChildren,
   LayoutIndexLazyRoute: LayoutIndexLazyRoute,
   LayoutListingIdRoute: LayoutListingIdRoute,
 }

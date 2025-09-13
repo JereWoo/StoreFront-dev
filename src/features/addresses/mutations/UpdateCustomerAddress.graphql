@@ -1,0 +1,5 @@
+mutation UpdateCustomerAddress($input: UpdateAddressInput!) {
+    updateCustomerAddress(input: $input) {
+        ...AddressFields
+    }
+}

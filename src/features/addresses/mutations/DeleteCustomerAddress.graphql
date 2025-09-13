@@ -1,0 +1,5 @@
+mutation DeleteCustomerAddress($id: ID!) {
+    deleteCustomerAddress(id: $id) {
+        success
+    }
+}

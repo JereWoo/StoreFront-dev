@@ -1,9 +1,0 @@
-fragment ProductCardFields on Product {
-    id
-    name
-    slug
-    featuredAsset {
-        id
-        preview
-    }
-}

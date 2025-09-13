@@ -1,4 +1,4 @@
-import type { AddressFormValues } from "@/components/ui/composites/AddressForm";
+import type { AddressFormValues } from "@/features/addresses/components/AddressForm.tsx";
 import type { CreateAddressInput } from "@/generated/graphql";
 
 export function toVendureAddress(

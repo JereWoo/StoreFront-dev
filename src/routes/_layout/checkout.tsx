@@ -7,11 +7,11 @@ import {
   useActiveOrderQuery,
 } from "@/generated/hooks";
 
-import { AddressForm } from "@/components/ui/composites/AddressForm.tsx";
+import { AddressForm } from "@/features/addresses/components/AddressForm.tsx";
 import { toVendureAddress } from "@/lib/toVendureAddress.ts";
 import { StripePayments } from "@/components/ui/composites/StripePayments";
 import { useState } from "react";
-import type { AddressFormValues } from "@/components/ui/composites/AddressForm";
+import type { AddressFormValues } from "@/features/addresses/components/AddressForm.tsx";
 
 export const Route = createFileRoute("/_layout/checkout")({
   component: CheckoutPage,
@@ -81,10 +81,7 @@ function CheckoutPage() {
       {/* Address section */}
       <section>
         <h2 className="text-xl mb-2">Shipping Address</h2>
-        <AddressForm
-          submitLabel="Continue to Payment"
-          onSubmit={handleAddressSubmit}
-        />
+        <AddressForm submitLabel="Done" onSubmit={handleAddressSubmit} />
       </section>
 
       {/* Shipping method (flat rate for now) */}

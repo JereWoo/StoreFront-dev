@@ -5,7 +5,6 @@ import {
   useState,
   useCallback,
 } from "react";
-
 import {
   MeDocument,
   MeQuery,
@@ -13,8 +12,8 @@ import {
   ActiveCustomerQuery,
   LogoutDocument,
   LogoutMutation,
-} from "@/generated/graphql.ts";
-import { vendureFetcher } from "@/api/vendure/fetcher.ts";
+} from "@/generated/graphql";
+import { vendureFetcher } from "@/api/vendure/fetcher";
 
 type AuthState =
   | { status: "checking"; user: null; customer: null }
@@ -30,21 +29,7 @@ type CtxType = AuthState & {
   logout: () => Promise<void>;
 };
 
-const Ctx = createContext<CtxType>({
-  status: "checking",
-  user: null,
-  customer: null,
-  refresh: async () => {
-    // TODO: idk do it later
-    throw new Error("refresh() called before AuthProvider mounted");
-  },
-  logout: async () => {
-    // TODO: idk do it later
-    throw new Error("logout() called before AuthProvider mounted");
-  },
-});
-
-const AUTH_TOKEN_KEY = "auth_token";
+export const AuthContext = createContext<CtxType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<AuthState>({
@@ -74,7 +59,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         customer: activeCustomer,
       });
     } catch (err) {
-      console.error("[Auth] refresh() failed; setting anonymous", err);
+      console.error("[Auth] refresh() failed", err);
       setState({ status: "anonymous", user: null, customer: null });
     }
   }, []);
@@ -86,40 +71,45 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       console.error("[Auth] logout mutation failed (continuing)", err);
     }
     try {
-      localStorage.removeItem(AUTH_TOKEN_KEY);
+      localStorage.removeItem("auth_token");
     } catch (err) {
       console.error(
         "[Auth] failed to remove auth token from localStorage",
         err,
       );
     }
+
+    // After logging out, mark user as anonymous
     setState({ status: "anonymous", user: null, customer: null });
   }, []);
 
+  // Hydrate auth on mount
   useEffect(() => {
     void refresh();
   }, [refresh]);
 
-  useEffect(() => {
-    const onInvalid = () => {
-      console.warn("[Auth] received neb-auth-invalid event; setting anonymous");
-      setState({ status: "anonymous", user: null, customer: null });
-    };
-    if (typeof window !== "undefined") {
-      window.addEventListener("neb-auth-invalid", onInvalid);
-    }
-    return () => {
-      if (typeof window !== "undefined") {
-        window.removeEventListener("neb-auth-invalid", onInvalid);
-      }
-    };
-  }, []);
+  if (state.status === "checking") {
+    // This is the "blocking hydration" piece: don’t render children until we know auth state
+    return <p>Loading app…</p>;
+  }
 
   return (
-    <Ctx.Provider value={{ ...state, refresh, logout }}>
+    <AuthContext.Provider value={{ ...state, refresh, logout }}>
       {children}
-    </Ctx.Provider>
+    </AuthContext.Provider>
   );
 }
 
-export const useAuth = () => useContext(Ctx);
+// Convenience hook
+export function useAuth() {
+  const ctx = useContext(AuthContext);
+  if (!ctx) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+
+  return {
+    ...ctx,
+    isAuthenticated: ctx.status === "authenticated",
+    isLoading: ctx.status === "checking",
+  };
+}
