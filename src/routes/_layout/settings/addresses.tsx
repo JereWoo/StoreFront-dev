@@ -16,7 +16,6 @@ function AddressPage() {
 
   return (
     <div>
-      <h2 className="text-lg font-semibold mb-4">Your Addresses</h2>
       <AddressList
         addresses={customer.addresses ?? []}
         defaultId={customer.defaultShippingAddress?.id ?? null}
