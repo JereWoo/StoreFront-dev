@@ -1,7 +1,7 @@
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 import "@mantine/core/styles.css";
-import { HeaderMegaMenu } from "@/layout/header";
-import { FooterLinks } from "@/layout/footer.tsx";
+import { HeaderMegaMenu } from "@/layout/header/Header";
+import { FooterLinks } from "@/layout/Footer";
 
 export const Route = createFileRoute("/_layout")({
   component: LayoutComponent,

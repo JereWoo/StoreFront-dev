@@ -1,7 +1,7 @@
 import { Box, Group, Burger, Text } from "@mantine/core";
 import { SearchBar } from "@/features/search";
-import { MessagesButton } from "../components/ui/composites/MessagesButton.tsx";
-import { LightDarkToggle } from "../components/ui/composites/LightDark.tsx";
+import { MessagesButton } from "../../components/ui/composites/MessagesButton.tsx";
+import { LightDarkToggle } from "../../components/ui/composites/LightDark.tsx";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { AuthButton } from "@/features/auth";
