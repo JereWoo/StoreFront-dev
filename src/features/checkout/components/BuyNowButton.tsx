@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui/9ui/button";
+import { Button } from "@/components/ui/9ui/button.tsx";
 import { useNavigate } from "@tanstack/react-router";
-import { Route as CheckoutRoute } from "@/routes/_layout/checkout";
+import { Route as CheckoutRoute } from "@/routes/_layout/checkout.tsx";
 import {
   useAddItemToOrderMutation,
   useActiveCustomerQuery,
   useSetOrderShippingAddressMutation,
-} from "@/generated/hooks";
+} from "@/generated/hooks.ts";
 
 type BuyNowButtonProps = {
   productId: string;

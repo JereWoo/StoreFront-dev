@@ -9,7 +9,7 @@ import {
 
 import { AddressForm } from "@/features/addresses/components/AddressForm.tsx";
 import { toVendureAddress } from "@/lib/toVendureAddress.ts";
-import { StripePayments } from "@/components/ui/composites/StripePayments";
+import { StripePayments } from "@/features/checkout/components/StripePayments.tsx";
 import { useState } from "react";
 import type { AddressFormValues } from "@/features/addresses/components/AddressForm.tsx";
 

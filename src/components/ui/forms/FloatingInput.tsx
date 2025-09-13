@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cn } from "@/lib/utils"; // adjust if you don’t have cn()
+import { cn } from "@/lib/utils.ts"; // adjust if you don’t have cn()
 
 export interface FloatingInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {

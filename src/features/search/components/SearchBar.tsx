@@ -1,5 +1,4 @@
-// src/components/ui/SearchBar.tsx
-import { Input } from "@/components/ui/9ui/input";
+import { Input } from "@/components/ui/9ui/input.tsx";
 import { IconSearch } from "@tabler/icons-react";
 
 type SearchBarProps = {

@@ -1,7 +1,7 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils.ts";
 import { useState } from "react";
-import { useGetFacetsQuery } from "@/generated/hooks";
-import { GetFacetsQuery } from "@/generated/graphql";
+import { useGetFacetsQuery } from "@/generated/hooks.ts";
+import { GetFacetsQuery } from "@/generated/graphql.ts";
 
 type FacetMenuProps = {
   selected: string[];

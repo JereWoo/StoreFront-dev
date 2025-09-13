@@ -4,7 +4,7 @@ import { Loader } from "@mantine/core";
 import { useState } from "react";
 
 import { AspectRatio } from "@/components/ui/9ui/aspect-ratio";
-import { BuyNowButton } from "@/components/ui/composites/BuyNowButton";
+import { BuyNowButton } from "@/features/checkout/components/BuyNowButton.tsx";
 import {
   Carousel,
   CarouselApi,

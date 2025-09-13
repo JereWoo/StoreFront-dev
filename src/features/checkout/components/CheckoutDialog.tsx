@@ -3,10 +3,10 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/9ui/dialog";
-import { Button } from "@/components/ui/9ui/button";
+} from "@/components/ui/9ui/dialog.tsx";
+import { Button } from "@/components/ui/9ui/button.tsx";
 import { useState } from "react";
-import { useCheckout } from "@/lib/useCheckout"; // 👈 new import
+import { useCheckout } from "@/lib/useCheckout.ts"; // 👈 new import
 
 // fake shipping + payment options
 const shippingOptions = [

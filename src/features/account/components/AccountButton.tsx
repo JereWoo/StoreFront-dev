@@ -116,7 +116,7 @@ export function AccountButton({
           </Menu.Item>
           <Menu.Item
             component={Link}
-            to="/account/settings"
+            to="/settings"
             leftSection={<IconSettings size={18} />}
           >
             Settings

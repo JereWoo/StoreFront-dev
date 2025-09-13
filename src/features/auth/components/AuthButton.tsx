@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { IconUser } from "@tabler/icons-react";
-import { useAuth } from "../services/AuthProvider";
+import { useAuth } from "@/features/auth";
 import { AccountButton } from "@/features/account";
 
 export function AuthButton() {

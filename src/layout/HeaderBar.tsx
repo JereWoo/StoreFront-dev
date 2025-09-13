@@ -1,8 +1,7 @@
 import { Box, Group, Burger, Text } from "@mantine/core";
-import { SearchBar } from "./SearchBar";
-import { AccountButton } from "./AccountButton";
-import { MessagesButton } from "./MessagesButton";
-import { LightDarkToggle } from "./LightDark";
+import { SearchBar } from "@/features/search";
+import { MessagesButton } from "../components/ui/composites/MessagesButton.tsx";
+import { LightDarkToggle } from "../components/ui/composites/LightDark.tsx";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { AuthButton } from "@/features/auth";
@@ -10,8 +9,6 @@ import { AuthButton } from "@/features/auth";
 export function HeaderBar({
   drawerOpened,
   onToggleDrawer,
-  user,
-  onLogout,
 }: {
   drawerOpened: boolean;
   onToggleDrawer: () => void;

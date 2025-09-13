@@ -9,7 +9,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/composites/pagination";
 import { usePagination } from "@/lib/usePagination";
-import { FilterModal } from "@/components/ui/composites/filtermodal.tsx";
+import { FilterModal } from "@/features/search/components/filtermodal.tsx";
 import { Toggle } from "@/components/ui/9ui/toggle";
 
 import { useSearchProductsQuery } from "@/generated/hooks";
