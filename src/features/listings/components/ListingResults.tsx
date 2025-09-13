@@ -67,7 +67,7 @@ export function ListingResults({
       {items.length === 0 ? (
         <p>No listings found for these filters.</p>
       ) : view === "grid" ? (
-        <div className="grid gap-6 grid-cols-[repeat(auto-fit,minmax(18rem,1fr))]">
+        <div className="grid gap-6 justify-center grid-cols-[repeat(auto-fit,minmax(18rem,18rem))]">
           {items.map((listing) => (
             <ListingTile key={listing.productId} listing={listing} />
           ))}

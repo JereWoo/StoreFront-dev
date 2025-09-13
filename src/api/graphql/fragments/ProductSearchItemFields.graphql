@@ -6,4 +6,14 @@ fragment ProductSearchItemFields on SearchResult {
         id
         preview
     }
+    priceWithTax {
+        __typename
+        ... on SinglePrice {
+            value
+        }
+        ... on PriceRange {
+            min
+            max
+        }
+    }
 }

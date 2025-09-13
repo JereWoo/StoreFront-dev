@@ -5,6 +5,7 @@ import {
   useAddItemToOrderMutation,
   useActiveCustomerQuery,
   useSetOrderShippingAddressMutation,
+  useRemoveAllOrderLinesMutation,
 } from "@/generated/hooks.ts";
 
 type BuyNowButtonProps = {
@@ -14,44 +15,51 @@ type BuyNowButtonProps = {
 
 export function BuyNowButton({ productId, variantId }: BuyNowButtonProps) {
   const navigate = useNavigate();
-
-  const { data } = useActiveCustomerQuery(); // gets customer + addresses
+  const { data } = useActiveCustomerQuery();
+  const removeAll = useRemoveAllOrderLinesMutation();
   const addItemToOrder = useAddItemToOrderMutation();
   const setOrderShippingAddress = useSetOrderShippingAddressMutation();
 
-  async function handleBuyNow() {
-    const result = await addItemToOrder.mutateAsync({
-      productVariantId: variantId,
-      quantity: 1,
-    });
+  const handleBuyNow = async () => {
+    try {
+      // clear cart
+      await removeAll.mutateAsync({});
 
-    const added = result?.addItemToOrder;
+      // add this one variant
+      const result = await addItemToOrder.mutateAsync({
+        productVariantId: variantId,
+        quantity: 1,
+      });
 
-    if (added?.__typename === "Order") {
-      const defaultAddress = data?.activeCustomer?.addresses?.find(
-        (a) => a.defaultShippingAddress === true,
-      );
+      const added = result?.addItemToOrder;
 
-      if (defaultAddress) {
-        await setOrderShippingAddress.mutateAsync({
-          input: {
-            fullName: defaultAddress.fullName,
-            streetLine1: defaultAddress.streetLine1,
-            streetLine2: defaultAddress.streetLine2 || "",
-            city: defaultAddress.city,
-            postalCode: defaultAddress.postalCode,
-            countryCode: defaultAddress.country.code,
-            phoneNumber: defaultAddress.phoneNumber || "",
-          },
-        });
+      if (added?.__typename === "Order") {
+        // set default shipping if available
+        const defaultAddress = data?.activeCustomer?.addresses?.find(
+          (a) => a.defaultShippingAddress === true,
+        );
+
+        if (defaultAddress) {
+          await setOrderShippingAddress.mutateAsync({
+            input: {
+              fullName: defaultAddress.fullName,
+              streetLine1: defaultAddress.streetLine1,
+              streetLine2: defaultAddress.streetLine2 || "",
+              city: defaultAddress.city,
+              postalCode: defaultAddress.postalCode,
+              countryCode: defaultAddress.country.code,
+              phoneNumber: defaultAddress.phoneNumber || "",
+            },
+          });
+        }
       }
 
-      console.log("navigating to checkout", { variantId, productId });
+      // go to checkout
       navigate({ to: CheckoutRoute.to, search: { variantId, productId } });
-    } else {
-      console.log("navigating to checkout", { variantId, productId });
-      navigate({ to: CheckoutRoute.to, search: { variantId, productId } });
+    } catch (err) {
+      console.error("Buy now failed", err);
     }
-  }
+  };
+
   return <Button onClick={handleBuyNow}>Buy Now</Button>;
 }

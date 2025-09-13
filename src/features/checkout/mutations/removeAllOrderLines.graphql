@@ -1,0 +1,14 @@
+mutation RemoveAllOrderLines {
+    removeAllOrderLines {
+        ... on Order {
+            id
+            code
+            state
+            totalQuantity
+        }
+        ... on OrderModificationError {
+            errorCode
+            message
+        }
+    }
+}
