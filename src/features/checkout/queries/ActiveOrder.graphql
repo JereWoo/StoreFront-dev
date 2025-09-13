@@ -3,8 +3,24 @@ query ActiveOrder {
         id
         code
         state
-        totalWithTax
         currencyCode
+        subTotalWithTax
+        shippingWithTax
+        totalWithTax
+        lines {
+            id
+            quantity
+            productVariant {
+                id
+                name
+            }
+            linePrice
+            lineTax
+            linePriceWithTax
+            featuredAsset {
+                preview
+            }
+        }
         shippingAddress {
             fullName
             streetLine1

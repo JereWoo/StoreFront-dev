@@ -11,6 +11,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ChatRouteImport } from './routes/chat'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as AuthVerifyRouteImport } from './routes/auth/verify'
@@ -24,6 +25,11 @@ import { Route as LayoutListingIdRouteImport } from './routes/_layout/listing/$i
 
 const LayoutIndexLazyRouteImport = createFileRoute('/_layout/')()
 
+const ChatRoute = ChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -81,6 +87,7 @@ const LayoutListingIdRoute = LayoutListingIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/auth': typeof AuthRouteWithChildren
+  '/chat': typeof ChatRoute
   '/checkout': typeof LayoutCheckoutRoute
   '/demo': typeof LayoutDemoRoute
   '/products': typeof LayoutProductsRoute
@@ -93,6 +100,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/auth': typeof AuthRouteWithChildren
+  '/chat': typeof ChatRoute
   '/checkout': typeof LayoutCheckoutRoute
   '/demo': typeof LayoutDemoRoute
   '/products': typeof LayoutProductsRoute
@@ -107,6 +115,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layout': typeof LayoutRouteWithChildren
   '/auth': typeof AuthRouteWithChildren
+  '/chat': typeof ChatRoute
   '/_layout/checkout': typeof LayoutCheckoutRoute
   '/_layout/demo': typeof LayoutDemoRoute
   '/_layout/products': typeof LayoutProductsRoute
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/auth'
+    | '/chat'
     | '/checkout'
     | '/demo'
     | '/products'
@@ -133,6 +143,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/auth'
+    | '/chat'
     | '/checkout'
     | '/demo'
     | '/products'
@@ -146,6 +157,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_layout'
     | '/auth'
+    | '/chat'
     | '/_layout/checkout'
     | '/_layout/demo'
     | '/_layout/products'
@@ -160,10 +172,18 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   LayoutRoute: typeof LayoutRouteWithChildren
   AuthRoute: typeof AuthRouteWithChildren
+  ChatRoute: typeof ChatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/chat': {
+      id: '/chat'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof ChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -292,6 +312,7 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   LayoutRoute: LayoutRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
+  ChatRoute: ChatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
