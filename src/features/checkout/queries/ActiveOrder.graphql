@@ -1,26 +1,6 @@
 query ActiveOrder {
     activeOrder {
-        id
-        code
-        state
-        currencyCode
-        subTotalWithTax
-        shippingWithTax
-        totalWithTax
-        lines {
-            id
-            quantity
-            productVariant {
-                id
-                name
-            }
-            linePrice
-            lineTax
-            linePriceWithTax
-            featuredAsset {
-                preview
-            }
-        }
+        ...ActiveOrder
         shippingAddress {
             fullName
             streetLine1
@@ -28,20 +8,6 @@ query ActiveOrder {
             postalCode
             countryCode
             phoneNumber
-        }
-        shippingLines {
-            priceWithTax
-            shippingMethod {
-                id
-                name
-                description
-            }
-        }
-        payments {
-            id
-            state
-            amount
-            transactionId
         }
     }
 }

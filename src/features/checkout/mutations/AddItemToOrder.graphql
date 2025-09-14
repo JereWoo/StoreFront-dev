@@ -1,15 +1,15 @@
 mutation AddItemToOrder($productVariantId: ID!, $quantity: Int!) {
     addItemToOrder(productVariantId: $productVariantId, quantity: $quantity) {
-        ... on Order {
-            id
-            code
-            state
-            totalWithTax
-            currencyCode
-        }
+        ...ActiveOrder
         ... on ErrorResult {
             errorCode
             message
+        }
+        ... on InsufficientStockError {
+            quantityAvailable
+            order {
+                ...ActiveOrder
+            }
         }
     }
 }

@@ -1,0 +1,9 @@
+mutation RemoveItemFromOrder($orderLineId: ID!) {
+    removeOrderLine(orderLineId: $orderLineId) {
+        ...ActiveOrder
+        ... on ErrorResult {
+            errorCode
+            message
+        }
+    }
+}

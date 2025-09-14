@@ -7,10 +7,11 @@ fragment AddressFields on Address {
     city
     province
     postalCode
+    country {
+        code
+        name
+    }
     phoneNumber
     defaultShippingAddress
     defaultBillingAddress
-    country {
-        code
-    }
 }

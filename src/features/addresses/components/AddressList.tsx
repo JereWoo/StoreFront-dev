@@ -1,4 +1,5 @@
 // features/addresses/components/AddressList.tsx
+
 import { useState } from "react";
 import {
   UpdateCustomerAddressDocument,
@@ -22,8 +23,12 @@ type Address = NonNullable<
   AddressListQuery["activeCustomer"]
 >["addresses"][number];
 
-export function AddressList() {
-  // React Query hook — note the client arg and isLoading/isError
+type AddressListProps = {
+  onSelect?: (address: Address) => void; // 👈 click-to-select
+  selectedAddressId?: string | null;     // 👈 highlight currently active
+};
+
+export function AddressList({ onSelect, selectedAddressId }: AddressListProps) {
   const { data, isLoading, isError, refetch } =
     useAddressListQuery(vendureFetcher);
 
@@ -42,6 +47,7 @@ export function AddressList() {
     });
     await refetch();
   };
+
   async function handleSave(values: AddressFormValues, id?: string) {
     try {
       const input = toVendureAddress(values);
@@ -72,16 +78,29 @@ export function AddressList() {
         <AddAddressButton onAdded={refetch} />
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
         {addresses.map((addr) => (
-          <AddressCard
+          <div
             key={addr.id}
-            address={addr}
-            isDefault={addr.defaultShippingAddress}
-            onEdit={() => setEditing(addr)}
-            onDelete={() => handleDelete(addr.id)}
-            onSetDefault={() => handleSetDefault(addr.id)}
-          />
+            onClick={() => onSelect?.(addr)} // 👈 click selects & closes modal
+            className={`cursor-pointer rounded-lg border p-3 transition
+              ${selectedAddressId === addr.id
+              ? "border-emerald-600 bg-emerald-50"
+              : "border-gray-200 hover:border-emerald-400"}`}
+          >
+            <AddressCard
+              address={addr}
+              isDefault={addr.defaultShippingAddress}
+              onEdit={() => setEditing(addr)}
+              onDelete={() => handleDelete(addr.id)}
+              onSetDefault={() => handleSetDefault(addr.id)}
+            />
+            {selectedAddressId === addr.id && (
+              <p className="mt-1 text-xs text-emerald-700 font-medium">
+                Selected
+              </p>
+            )}
+          </div>
         ))}
 
         <AddressFormModal
@@ -90,11 +109,11 @@ export function AddressList() {
           initialValues={
             editing
               ? {
-                  ...editing,
-                  firstName: editing.fullName?.split(" ")[0] ?? "",
-                  lastName:
-                    editing.fullName?.split(" ").slice(1).join(" ") ?? "",
-                }
+                ...editing,
+                firstName: editing.fullName?.split(" ")[0] ?? "",
+                lastName:
+                  editing.fullName?.split(" ").slice(1).join(" ") ?? "",
+              }
               : undefined
           }
           onSubmit={(vals) => handleSave(vals, editing?.id)}

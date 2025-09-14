@@ -67,7 +67,7 @@ export function MessagesButton() {
 
           <Menu.Item
             component={Link}
-            to="/messages"
+            to="/chat"
             fw={500}
             className="text-center justify-center"
           >

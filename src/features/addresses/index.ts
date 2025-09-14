@@ -5,7 +5,7 @@ export { AddressCard } from "./components/AddressCard.tsx";
 export { AddressForm } from "./components/AddressForm.tsx";
 export { AddressFormModal } from "./components/AddressFormModal.tsx";
 export { AddressList } from "./components/AddressList.tsx";
-export { ShipToCard } from "../checkout/components/ShipToCard.tsx";
+
 
 // If you want to re-export hooks later, you can do that too:
 // export { useShippingAddressesQuery } from "@/generated/graphql";

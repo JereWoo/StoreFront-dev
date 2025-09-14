@@ -16,6 +16,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as AuthVerifyRouteImport } from './routes/auth/verify'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
+import { Route as LayoutTestingRouteImport } from './routes/_layout/testing'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
 import { Route as LayoutProductsRouteImport } from './routes/_layout/products'
 import { Route as LayoutDemoRouteImport } from './routes/_layout/demo'
@@ -53,6 +54,11 @@ const AuthSignInRoute = AuthSignInRouteImport.update({
   id: '/sign-in',
   path: '/sign-in',
   getParentRoute: () => AuthRoute,
+} as any)
+const LayoutTestingRoute = LayoutTestingRouteImport.update({
+  id: '/testing',
+  path: '/testing',
+  getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutSettingsRoute = LayoutSettingsRouteImport.update({
   id: '/settings',
@@ -92,6 +98,7 @@ export interface FileRoutesByFullPath {
   '/demo': typeof LayoutDemoRoute
   '/products': typeof LayoutProductsRoute
   '/settings': typeof LayoutSettingsRouteWithChildren
+  '/testing': typeof LayoutTestingRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/verify': typeof AuthVerifyRoute
   '/': typeof LayoutIndexLazyRoute
@@ -105,6 +112,7 @@ export interface FileRoutesByTo {
   '/demo': typeof LayoutDemoRoute
   '/products': typeof LayoutProductsRoute
   '/settings': typeof LayoutSettingsRouteWithChildren
+  '/testing': typeof LayoutTestingRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/verify': typeof AuthVerifyRoute
   '/': typeof LayoutIndexLazyRoute
@@ -120,6 +128,7 @@ export interface FileRoutesById {
   '/_layout/demo': typeof LayoutDemoRoute
   '/_layout/products': typeof LayoutProductsRoute
   '/_layout/settings': typeof LayoutSettingsRouteWithChildren
+  '/_layout/testing': typeof LayoutTestingRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/verify': typeof AuthVerifyRoute
   '/_layout/': typeof LayoutIndexLazyRoute
@@ -135,6 +144,7 @@ export interface FileRouteTypes {
     | '/demo'
     | '/products'
     | '/settings'
+    | '/testing'
     | '/auth/sign-in'
     | '/auth/verify'
     | '/'
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/demo'
     | '/products'
     | '/settings'
+    | '/testing'
     | '/auth/sign-in'
     | '/auth/verify'
     | '/'
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/_layout/demo'
     | '/_layout/products'
     | '/_layout/settings'
+    | '/_layout/testing'
     | '/auth/sign-in'
     | '/auth/verify'
     | '/_layout/'
@@ -218,6 +230,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/sign-in'
       preLoaderRoute: typeof AuthSignInRouteImport
       parentRoute: typeof AuthRoute
+    }
+    '/_layout/testing': {
+      id: '/_layout/testing'
+      path: '/testing'
+      fullPath: '/testing'
+      preLoaderRoute: typeof LayoutTestingRouteImport
+      parentRoute: typeof LayoutRoute
     }
     '/_layout/settings': {
       id: '/_layout/settings'
@@ -281,6 +300,7 @@ interface LayoutRouteChildren {
   LayoutDemoRoute: typeof LayoutDemoRoute
   LayoutProductsRoute: typeof LayoutProductsRoute
   LayoutSettingsRoute: typeof LayoutSettingsRouteWithChildren
+  LayoutTestingRoute: typeof LayoutTestingRoute
   LayoutIndexLazyRoute: typeof LayoutIndexLazyRoute
   LayoutListingIdRoute: typeof LayoutListingIdRoute
 }
@@ -290,6 +310,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutDemoRoute: LayoutDemoRoute,
   LayoutProductsRoute: LayoutProductsRoute,
   LayoutSettingsRoute: LayoutSettingsRouteWithChildren,
+  LayoutTestingRoute: LayoutTestingRoute,
   LayoutIndexLazyRoute: LayoutIndexLazyRoute,
   LayoutListingIdRoute: LayoutListingIdRoute,
 }

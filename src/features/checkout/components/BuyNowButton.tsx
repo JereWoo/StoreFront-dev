@@ -7,6 +7,7 @@ import {
   useSetOrderShippingAddressMutation,
   useRemoveAllOrderLinesMutation,
 } from "@/generated/hooks.ts";
+import { toVendureAddress } from "@/lib/toVendureAddress.ts";
 
 type BuyNowButtonProps = {
   productId: string;
@@ -41,15 +42,8 @@ export function BuyNowButton({ productId, variantId }: BuyNowButtonProps) {
 
         if (defaultAddress) {
           await setOrderShippingAddress.mutateAsync({
-            input: {
-              fullName: defaultAddress.fullName,
-              streetLine1: defaultAddress.streetLine1,
-              streetLine2: defaultAddress.streetLine2 || "",
-              city: defaultAddress.city,
-              postalCode: defaultAddress.postalCode,
-              countryCode: defaultAddress.country.code,
-              phoneNumber: defaultAddress.phoneNumber || "",
-            },
+            input: toVendureAddress(defaultAddress)
+
           });
         }
       }

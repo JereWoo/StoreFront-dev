@@ -1,19 +1,7 @@
 mutation SetOrderShippingMethod($shippingMethodId: [ID!]!) {
     setOrderShippingMethod(shippingMethodId: $shippingMethodId) {
-        ... on Order {
-            id
-            state
-            shippingWithTax
-            shippingLines {
-                id
-                shippingMethod {
-                    id
-                    code
-                    name
-                }
-            }
-        }
-        ... on ErrorResult {
+        ...ActiveOrder
+        ...on ErrorResult {
             errorCode
             message
         }

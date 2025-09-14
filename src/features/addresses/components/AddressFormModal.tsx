@@ -1,4 +1,5 @@
 // features/addresses/components/AddressFormModal.tsx
+
 import {
   Dialog,
   DialogContent,
@@ -6,37 +7,50 @@ import {
   DialogTitle,
 } from "@/components/ui/9ui/dialog";
 import { AddressForm, AddressFormValues } from "./AddressForm";
+import { ReactNode } from "react";
 
 type AddressFormModalProps = {
-  open: boolean;
+  open: boolean; // 👈 always required
   onClose: () => void;
-  onSubmit: (values: AddressFormValues) => void;
+  title?: string;
+
+  // For direct AddressForm usage
+  onSubmit?: (values: AddressFormValues) => void;
   initialValues?: Partial<AddressFormValues>;
+
+  // For custom content (e.g. AddressList)
+  children?: ReactNode;
 };
 
 export function AddressFormModal({
-  open,
-  onClose,
-  onSubmit,
-  initialValues,
-}: AddressFormModalProps) {
+                                   open,
+                                   onClose,
+                                   title,
+                                   onSubmit,
+                                   initialValues,
+                                   children,
+                                 }: AddressFormModalProps) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {initialValues ? "Edit Address" : "Add Address"}
+            {title ??
+              (initialValues ? "Edit Address" : "Add Address")}
           </DialogTitle>
         </DialogHeader>
 
-        <AddressForm
-          initialValues={initialValues}
-          onSubmit={(vals) => {
-            onSubmit(vals); // forward up to AddAddressButton
-            // ❗️only close AFTER the mutation, not before
-          }}
-          submitLabel={initialValues ? "Save Changes" : "Save Address"}
-        />
+        {children ? (
+          children
+        ) : (
+          <AddressForm
+            initialValues={initialValues}
+            onSubmit={(vals) => {
+              onSubmit?.(vals);
+            }}
+            submitLabel={initialValues ? "Save Changes" : "Save Address"}
+          />
+        )}
       </DialogContent>
     </Dialog>
   );
