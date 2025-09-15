@@ -7,17 +7,8 @@ import {
   useSetOrderShippingMethodMutation,
   useCreateStripePaymentIntentMutation,
   useActiveOrderQuery,
-  useActiveCustomerQuery, // 👈 new
+  useActiveCustomerQuery,
 } from "@/generated/hooks";
-
-import {
-  AddressForm,
-  AddressCard,
-
-} from "@/features/addresses";
-
-import { AddressFormModal } from "@/features/addresses/components/AddressFormModal.tsx"; // 👈 reuse
-import { AddressList } from "@/features/addresses/components/AddressList.tsx"; // 👈 reuse
 
 import { toVendureAddress } from "@/lib/toVendureAddress.ts";
 import { StripePayments } from "@/features/checkout/components/StripePayments.tsx";
@@ -38,42 +29,42 @@ export const Route = createFileRoute("/_layout/checkout")({
 });
 
 function CheckoutPage() {
-  const { data: activeOrderData, refetch: refetchOrder } = useActiveOrderQuery({});
-  const { data: customerData, refetch: refetchCustomer } = useActiveCustomerQuery({});
+  const { data: activeOrderData } = useActiveOrderQuery({});
+  const { data: customerData } = useActiveCustomerQuery({});
   const {
     data: shippingData,
     isLoading,
     error,
-    refetch: refetchShippingMethods
   } = useEligibleShippingMethodsQuery({});
 
-  const { mutateAsync: setOrderShippingAddress } = useSetOrderShippingAddressMutation();
-  const { mutateAsync: setOrderShippingMethod } = useSetOrderShippingMethodMutation();
-  const { mutateAsync: createStripePaymentIntent } = useCreateStripePaymentIntentMutation();
-
+  const { mutateAsync: setOrderShippingAddress } =
+    useSetOrderShippingAddressMutation();
+  const { mutateAsync: setOrderShippingMethod } =
+    useSetOrderShippingMethodMutation();
+  const { mutateAsync: createStripePaymentIntent } =
+    useCreateStripePaymentIntentMutation();
   const [clientSecret, setClientSecret] = useState<string | null>(null);
-
-  const [showAddressForm, setShowAddressForm] = useState(false); // 👈 toggle form
 
   const orderCode = activeOrderData?.activeOrder?.code ?? "";
   const orderAddress = activeOrderData?.activeOrder?.shippingAddress ?? null;
   const hasAddress = !!activeOrderData?.activeOrder?.shippingAddress;
   const hasMethod = !!activeOrderData?.activeOrder?.shippingLines?.length;
 
-
-
-
-  if (isLoading) return <p>Loading checkout…</p>;
+  if (isLoading) return null;
   if (error) return <p>Error loading checkout: {error.message}</p>;
 
   const shippingMethod = shippingData?.eligibleShippingMethods?.[0];
   const addresses = customerData?.activeCustomer?.addresses ?? [];
 
-  async function handleSetOrderAddress(source: AddressFormValues | CustomerAddress) {
+  async function handleSetOrderAddress(
+    source: AddressFormValues | CustomerAddress,
+  ) {
     try {
       const input = toVendureAddress(source);
       await setOrderShippingAddress({ input });
-      await setOrderShippingMethod({ shippingMethodId: [shippingMethod?.id ?? ""] });
+      await setOrderShippingMethod({
+        shippingMethodId: [shippingMethod?.id ?? ""],
+      });
       // TODO: Transition to payment arrangements
       await queryClient.invalidateQueries({ queryKey: ["ActiveOrder"] });
       //await Promise.all([refetchOrder(), refetchShippingMethods()]);
@@ -83,10 +74,8 @@ function CheckoutPage() {
     }
   }
 
-
-
-//  const defaultAddress = addresses.find((a) => a.defaultShippingAddress) ?? addresses[0];
-/*
+  //  const defaultAddress = addresses.find((a) => a.defaultShippingAddress) ?? addresses[0];
+  /*
   async function handleAddressSubmit(values: AddressFormValues) {
     const input = toVendureAddress(values);
 
@@ -142,7 +131,6 @@ function CheckoutPage() {
           </button>
         </div>
       )}
-
 
       {/* Payment */}
       {clientSecret && (

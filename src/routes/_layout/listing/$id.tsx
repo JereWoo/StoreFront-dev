@@ -38,11 +38,15 @@ function ProductDetailPage() {
   const product = data?.product;
   if (!product) return <p>Product not found</p>;
 
-  const images = product.assets?.length
-    ? product.assets
-    : product.featuredAsset
-      ? [product.featuredAsset]
+  // For now, just show the first variant
+  const variant = product.variants[0];
+  const images = variant.assets?.length
+    ? variant.assets
+    : variant.featuredAsset
+      ? [variant.featuredAsset]
       : [];
+
+  const seller = variant.customFields?.seller;
 
   // Hook into carousel events
   api?.on("select", () => {
@@ -63,9 +67,8 @@ function ProductDetailPage() {
                 >
                   <img
                     src={img.preview}
-                    alt={product.name}
-                    fill
-                    className="rounded-lg object-contain"
+                    alt={variant.name}
+                    className="rounded-lg object-contain w-full h-full"
                   />
                 </AspectRatio>
               </CarouselItem>
@@ -83,10 +86,9 @@ function ProductDetailPage() {
             >
               <img
                 src={img.preview}
-                alt={product.name}
-                fill
+                alt={variant.name}
                 className={cn(
-                  "rounded-md object-cover opacity-60 transition-opacity duration-200 hover:opacity-100",
+                  "rounded-md object-cover w-full h-full opacity-60 transition-opacity duration-200 hover:opacity-100",
                   selectedIndex === index &&
                     "opacity-100 ring-2 ring-emerald-500",
                 )}
@@ -100,26 +102,29 @@ function ProductDetailPage() {
       <div className="flex flex-col gap-4">
         <h1 className="text-2xl font-bold">{product.name}</h1>
         <p className="text-xl font-semibold text-emerald-700">
-          ${Math.floor(Math.random() * 100) + 20 /* placeholder price */}
+          ${variant.priceWithTax / 100}
         </p>
 
         <div className="flex gap-3">
-          <BuyNowButton
-            productId={product.id}
-            variantId={product.variants[0].id}
-          />
+          <BuyNowButton productId={product.id} variantId={variant.id} />
           <Button variant="outline">Message Seller</Button>
         </div>
 
         {/* Seller Info Card */}
-        <Card className="p-4 mt-4">
-          <h2 className="font-semibold text-lg mb-2">Seller Information</h2>
-          <p className="text-sm">Book Dealer Co.</p>
-          <p className="text-sm text-gray-500">Ships from USA</p>
-          <Button size="sm" variant="ghost" className="mt-2">
-            View Seller Profile
-          </Button>
-        </Card>
+        {seller && (
+          <Card className="p-4 mt-4">
+            <h2 className="font-semibold text-lg mb-2">Seller Information</h2>
+            <p className="text-sm font-medium">{seller.name}</p>
+            {seller.customFields?.phoneNumber && (
+              <p className="text-sm text-gray-500">
+                Phone: {seller.customFields.phoneNumber}
+              </p>
+            )}
+            <Button size="sm" variant="ghost" className="mt-2">
+              View Seller Profile
+            </Button>
+          </Card>
+        )}
       </div>
 
       {/* Bottom: Tabs for details */}
@@ -140,7 +145,18 @@ function ProductDetailPage() {
           </TabsContent>
 
           <TabsContent value="seller" className="mt-4">
-            <p>Book Dealer Co. has been selling rare books since 1995.</p>
+            {seller ? (
+              <>
+                <p className="font-medium">{seller.name}</p>
+                {seller.customFields?.phoneNumber && (
+                  <p className="text-sm text-gray-500">
+                    Phone: {seller.customFields.phoneNumber}
+                  </p>
+                )}
+              </>
+            ) : (
+              <p>No seller information available.</p>
+            )}
           </TabsContent>
         </Tabs>
       </div>

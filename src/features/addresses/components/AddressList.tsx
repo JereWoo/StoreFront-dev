@@ -25,7 +25,7 @@ type Address = NonNullable<
 
 type AddressListProps = {
   onSelect?: (address: Address) => void; // 👈 click-to-select
-  selectedAddressId?: string | null;     // 👈 highlight currently active
+  selectedAddressId?: string | null; // 👈 highlight currently active
 };
 
 export function AddressList({ onSelect, selectedAddressId }: AddressListProps) {
@@ -83,10 +83,12 @@ export function AddressList({ onSelect, selectedAddressId }: AddressListProps) {
           <div
             key={addr.id}
             onClick={() => onSelect?.(addr)} // 👈 click selects & closes modal
-            className={`cursor-pointer rounded-lg border p-3 transition
-              ${selectedAddressId === addr.id
-              ? "border-emerald-600 bg-emerald-50"
-              : "border-gray-200 hover:border-emerald-400"}`}
+            className={`mb-4 cursor-pointer rounded-lg border p-3 transition
+              ${
+                selectedAddressId === addr.id
+                  ? "border-emerald-600 bg-emerald-50"
+                  : "border-gray-200 hover:border-emerald-400"
+              }`}
           >
             <AddressCard
               address={addr}
@@ -109,11 +111,11 @@ export function AddressList({ onSelect, selectedAddressId }: AddressListProps) {
           initialValues={
             editing
               ? {
-                ...editing,
-                firstName: editing.fullName?.split(" ")[0] ?? "",
-                lastName:
-                  editing.fullName?.split(" ").slice(1).join(" ") ?? "",
-              }
+                  ...editing,
+                  firstName: editing.fullName?.split(" ")[0] ?? "",
+                  lastName:
+                    editing.fullName?.split(" ").slice(1).join(" ") ?? "",
+                }
               : undefined
           }
           onSubmit={(vals) => handleSave(vals, editing?.id)}

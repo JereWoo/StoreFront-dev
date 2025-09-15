@@ -19,6 +19,7 @@ import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
 import { Route as LayoutTestingRouteImport } from './routes/_layout/testing'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
 import { Route as LayoutProductsRouteImport } from './routes/_layout/products'
+import { Route as LayoutOnboardingRouteImport } from './routes/_layout/onboarding'
 import { Route as LayoutDemoRouteImport } from './routes/_layout/demo'
 import { Route as LayoutCheckoutRouteImport } from './routes/_layout/checkout'
 import { Route as LayoutSettingsAddressesRouteImport } from './routes/_layout/settings/addresses'
@@ -70,6 +71,11 @@ const LayoutProductsRoute = LayoutProductsRouteImport.update({
   path: '/products',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutOnboardingRoute = LayoutOnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutDemoRoute = LayoutDemoRouteImport.update({
   id: '/demo',
   path: '/demo',
@@ -96,6 +102,7 @@ export interface FileRoutesByFullPath {
   '/chat': typeof ChatRoute
   '/checkout': typeof LayoutCheckoutRoute
   '/demo': typeof LayoutDemoRoute
+  '/onboarding': typeof LayoutOnboardingRoute
   '/products': typeof LayoutProductsRoute
   '/settings': typeof LayoutSettingsRouteWithChildren
   '/testing': typeof LayoutTestingRoute
@@ -110,6 +117,7 @@ export interface FileRoutesByTo {
   '/chat': typeof ChatRoute
   '/checkout': typeof LayoutCheckoutRoute
   '/demo': typeof LayoutDemoRoute
+  '/onboarding': typeof LayoutOnboardingRoute
   '/products': typeof LayoutProductsRoute
   '/settings': typeof LayoutSettingsRouteWithChildren
   '/testing': typeof LayoutTestingRoute
@@ -126,6 +134,7 @@ export interface FileRoutesById {
   '/chat': typeof ChatRoute
   '/_layout/checkout': typeof LayoutCheckoutRoute
   '/_layout/demo': typeof LayoutDemoRoute
+  '/_layout/onboarding': typeof LayoutOnboardingRoute
   '/_layout/products': typeof LayoutProductsRoute
   '/_layout/settings': typeof LayoutSettingsRouteWithChildren
   '/_layout/testing': typeof LayoutTestingRoute
@@ -142,6 +151,7 @@ export interface FileRouteTypes {
     | '/chat'
     | '/checkout'
     | '/demo'
+    | '/onboarding'
     | '/products'
     | '/settings'
     | '/testing'
@@ -156,6 +166,7 @@ export interface FileRouteTypes {
     | '/chat'
     | '/checkout'
     | '/demo'
+    | '/onboarding'
     | '/products'
     | '/settings'
     | '/testing'
@@ -171,6 +182,7 @@ export interface FileRouteTypes {
     | '/chat'
     | '/_layout/checkout'
     | '/_layout/demo'
+    | '/_layout/onboarding'
     | '/_layout/products'
     | '/_layout/settings'
     | '/_layout/testing'
@@ -252,6 +264,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutProductsRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/onboarding': {
+      id: '/_layout/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof LayoutOnboardingRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/demo': {
       id: '/_layout/demo'
       path: '/demo'
@@ -298,6 +317,7 @@ const LayoutSettingsRouteWithChildren = LayoutSettingsRoute._addFileChildren(
 interface LayoutRouteChildren {
   LayoutCheckoutRoute: typeof LayoutCheckoutRoute
   LayoutDemoRoute: typeof LayoutDemoRoute
+  LayoutOnboardingRoute: typeof LayoutOnboardingRoute
   LayoutProductsRoute: typeof LayoutProductsRoute
   LayoutSettingsRoute: typeof LayoutSettingsRouteWithChildren
   LayoutTestingRoute: typeof LayoutTestingRoute
@@ -308,6 +328,7 @@ interface LayoutRouteChildren {
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCheckoutRoute: LayoutCheckoutRoute,
   LayoutDemoRoute: LayoutDemoRoute,
+  LayoutOnboardingRoute: LayoutOnboardingRoute,
   LayoutProductsRoute: LayoutProductsRoute,
   LayoutSettingsRoute: LayoutSettingsRouteWithChildren,
   LayoutTestingRoute: LayoutTestingRoute,

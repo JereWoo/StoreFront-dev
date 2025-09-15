@@ -90,7 +90,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   if (state.status === "checking") {
     // This is the "blocking hydration" piece: don’t render children until we know auth state
-    return <p>Loading app…</p>;
+    return null;
   }
 
   return (

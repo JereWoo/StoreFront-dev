@@ -8,7 +8,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AuthProvider } from "@/features/auth";
 
 import { queryClient } from "@/lib/utils";
-
+//todo: add global error handler/catch
 export const Route = createRootRoute({
   component: () => (
     <AuthProvider>

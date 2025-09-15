@@ -2,18 +2,30 @@ query ProductById($id: ID!) {
     product(id: $id) {
         id
         name
-        slug
         description
-        featuredAsset { id preview }
-        assets { id preview }
+        enabled
         variants {
             id
-            productId
             name
             sku
             priceWithTax
-            currencyCode
-            stockLevel
+            assets {
+                id
+                preview
+            }
+            featuredAsset {
+                id
+                preview
+            }
+            customFields {
+                seller {
+                    id
+                    name
+                    customFields {
+                        phoneNumber
+                    }
+                }
+            }
         }
     }
 }
