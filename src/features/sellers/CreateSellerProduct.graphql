@@ -1,0 +1,14 @@
+mutation CreateSellerProduct($input: SellerCreateProductInput!) {
+    createSellerProduct(input: $input) {
+        id
+        slug
+        name
+        description
+        enabled
+        variants {
+            id
+            sku
+            price
+        }
+    }
+}

@@ -23,6 +23,8 @@ import { Route as LayoutOnboardingRouteImport } from './routes/_layout/onboardin
 import { Route as LayoutDemoRouteImport } from './routes/_layout/demo'
 import { Route as LayoutCheckoutRouteImport } from './routes/_layout/checkout'
 import { Route as LayoutSettingsAddressesRouteImport } from './routes/_layout/settings/addresses'
+import { Route as LayoutSellNewListingRouteImport } from './routes/_layout/sell/new-listing'
+import { Route as LayoutSellCreateListingRouteImport } from './routes/_layout/sell/create-listing'
 import { Route as LayoutListingIdRouteImport } from './routes/_layout/listing/$id'
 
 const LayoutIndexLazyRouteImport = createFileRoute('/_layout/')()
@@ -91,6 +93,16 @@ const LayoutSettingsAddressesRoute = LayoutSettingsAddressesRouteImport.update({
   path: '/addresses',
   getParentRoute: () => LayoutSettingsRoute,
 } as any)
+const LayoutSellNewListingRoute = LayoutSellNewListingRouteImport.update({
+  id: '/sell/new-listing',
+  path: '/sell/new-listing',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutSellCreateListingRoute = LayoutSellCreateListingRouteImport.update({
+  id: '/sell/create-listing',
+  path: '/sell/create-listing',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutListingIdRoute = LayoutListingIdRouteImport.update({
   id: '/listing/$id',
   path: '/listing/$id',
@@ -110,6 +122,8 @@ export interface FileRoutesByFullPath {
   '/auth/verify': typeof AuthVerifyRoute
   '/': typeof LayoutIndexLazyRoute
   '/listing/$id': typeof LayoutListingIdRoute
+  '/sell/create-listing': typeof LayoutSellCreateListingRoute
+  '/sell/new-listing': typeof LayoutSellNewListingRoute
   '/settings/addresses': typeof LayoutSettingsAddressesRoute
 }
 export interface FileRoutesByTo {
@@ -125,6 +139,8 @@ export interface FileRoutesByTo {
   '/auth/verify': typeof AuthVerifyRoute
   '/': typeof LayoutIndexLazyRoute
   '/listing/$id': typeof LayoutListingIdRoute
+  '/sell/create-listing': typeof LayoutSellCreateListingRoute
+  '/sell/new-listing': typeof LayoutSellNewListingRoute
   '/settings/addresses': typeof LayoutSettingsAddressesRoute
 }
 export interface FileRoutesById {
@@ -142,6 +158,8 @@ export interface FileRoutesById {
   '/auth/verify': typeof AuthVerifyRoute
   '/_layout/': typeof LayoutIndexLazyRoute
   '/_layout/listing/$id': typeof LayoutListingIdRoute
+  '/_layout/sell/create-listing': typeof LayoutSellCreateListingRoute
+  '/_layout/sell/new-listing': typeof LayoutSellNewListingRoute
   '/_layout/settings/addresses': typeof LayoutSettingsAddressesRoute
 }
 export interface FileRouteTypes {
@@ -159,6 +177,8 @@ export interface FileRouteTypes {
     | '/auth/verify'
     | '/'
     | '/listing/$id'
+    | '/sell/create-listing'
+    | '/sell/new-listing'
     | '/settings/addresses'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -174,6 +194,8 @@ export interface FileRouteTypes {
     | '/auth/verify'
     | '/'
     | '/listing/$id'
+    | '/sell/create-listing'
+    | '/sell/new-listing'
     | '/settings/addresses'
   id:
     | '__root__'
@@ -190,6 +212,8 @@ export interface FileRouteTypes {
     | '/auth/verify'
     | '/_layout/'
     | '/_layout/listing/$id'
+    | '/_layout/sell/create-listing'
+    | '/_layout/sell/new-listing'
     | '/_layout/settings/addresses'
   fileRoutesById: FileRoutesById
 }
@@ -292,6 +316,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutSettingsAddressesRouteImport
       parentRoute: typeof LayoutSettingsRoute
     }
+    '/_layout/sell/new-listing': {
+      id: '/_layout/sell/new-listing'
+      path: '/sell/new-listing'
+      fullPath: '/sell/new-listing'
+      preLoaderRoute: typeof LayoutSellNewListingRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/sell/create-listing': {
+      id: '/_layout/sell/create-listing'
+      path: '/sell/create-listing'
+      fullPath: '/sell/create-listing'
+      preLoaderRoute: typeof LayoutSellCreateListingRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/listing/$id': {
       id: '/_layout/listing/$id'
       path: '/listing/$id'
@@ -323,6 +361,8 @@ interface LayoutRouteChildren {
   LayoutTestingRoute: typeof LayoutTestingRoute
   LayoutIndexLazyRoute: typeof LayoutIndexLazyRoute
   LayoutListingIdRoute: typeof LayoutListingIdRoute
+  LayoutSellCreateListingRoute: typeof LayoutSellCreateListingRoute
+  LayoutSellNewListingRoute: typeof LayoutSellNewListingRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
@@ -334,6 +374,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutTestingRoute: LayoutTestingRoute,
   LayoutIndexLazyRoute: LayoutIndexLazyRoute,
   LayoutListingIdRoute: LayoutListingIdRoute,
+  LayoutSellCreateListingRoute: LayoutSellCreateListingRoute,
+  LayoutSellNewListingRoute: LayoutSellNewListingRoute,
 }
 
 const LayoutRouteWithChildren =

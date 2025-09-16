@@ -19,6 +19,8 @@ import {
   TextInput,
 } from "@mantine/core";
 import { upperFirst, useToggle } from "@mantine/hooks";
+import { FBLoginButton } from "@/features/auth/components/FacebookLoginButton.tsx";
+import { GoogleLoginButton } from "@/features/auth/components/GoogleLoginButton.tsx";
 
 export function AuthenticationForm(props: PaperProps) {
   const [mode, toggleMode] = useToggle<"login" | "register">([
@@ -103,6 +105,13 @@ export function AuthenticationForm(props: PaperProps) {
       </Text>
 
       <Divider label="Use your email" labelPosition="center" my="lg" />
+      <GoogleLoginButton />
+      <FBLoginButton
+        onSuccess={async () => {
+          await refresh(); // update auth state
+          navigate({ to: redirectTo }); // redirect like email login
+        }}
+      />
 
       <form onSubmit={onSubmit}>
         <Stack>

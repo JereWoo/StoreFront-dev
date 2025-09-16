@@ -1,0 +1,18 @@
+mutation AuthenticateFacebook($token: String!) {
+    authenticate(input: { facebook: { token: $token } }) {
+        __typename
+        ... on CurrentUser {
+            id
+            identifier
+            channels {
+                id
+                code
+                token
+            }
+        }
+        ... on ErrorResult {
+            errorCode
+            message
+        }
+    }
+}
