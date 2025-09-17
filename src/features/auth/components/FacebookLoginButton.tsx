@@ -46,17 +46,38 @@ export const FBLoginButton = ({ onSuccess }: FBLoginButtonProps) => {
     async (response: FBLoginStatusResponse) => {
       const { status, authResponse } = response;
       if (status === "connected" && authResponse) {
-        const result = await authenticate.mutateAsync({
-          token: authResponse.accessToken,
-          provider: "facebook",
-        });
+        try {
+          const result = await authenticate.mutateAsync({
+            token: authResponse.accessToken,
+            provider: "facebook",
+          });
 
-        if (result.authenticate?.__typename === "CurrentUser") {
-          await onSuccess?.();
+          if (result.authenticate?.__typename === "CurrentUser") {
+            await onSuccess?.();
+            return;
+          }
+
+          // Handle Vendure ErrorResult / NotVerifiedError etc
+          if (
+            result.authenticate &&
+            result.authenticate.__typename !== "CurrentUser"
+          ) {
+            const err = result.authenticate as {
+              message?: string;
+              errorCode?: string;
+            };
+            setError(
+              err.message ?? `Error: ${err.errorCode ?? "UNKNOWN_ERROR"}`,
+            );
+            return;
+          }
+        } catch (e: unknown) {
+          // Network or GraphQL-level error
+          setError(e.message ?? "Unexpected error");
           return;
         }
       }
-      setError("An error occurred!");
+      setError("Facebook login failed. Please try again.");
     },
     [authenticate, onSuccess],
   );

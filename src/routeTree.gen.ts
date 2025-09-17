@@ -8,361 +8,504 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as ChatRouteImport } from './routes/chat'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as LayoutRouteImport } from './routes/_layout'
-import { Route as AuthVerifyRouteImport } from './routes/auth/verify'
-import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
-import { Route as LayoutTestingRouteImport } from './routes/_layout/testing'
-import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
-import { Route as LayoutProductsRouteImport } from './routes/_layout/products'
-import { Route as LayoutOnboardingRouteImport } from './routes/_layout/onboarding'
-import { Route as LayoutDemoRouteImport } from './routes/_layout/demo'
-import { Route as LayoutCheckoutRouteImport } from './routes/_layout/checkout'
-import { Route as LayoutSettingsAddressesRouteImport } from './routes/_layout/settings/addresses'
-import { Route as LayoutSellNewListingRouteImport } from './routes/_layout/sell/new-listing'
-import { Route as LayoutSellCreateListingRouteImport } from './routes/_layout/sell/create-listing'
-import { Route as LayoutListingIdRouteImport } from './routes/_layout/listing/$id'
+import { Route as rootRouteImport } from "./routes/__root";
+import { Route as ChatRouteImport } from "./routes/chat";
+import { Route as AuthRouteImport } from "./routes/auth";
+import { Route as LayoutRouteImport } from "./routes/_layout";
+import { Route as AuthVerifyRouteImport } from "./routes/auth/verify";
+import { Route as AuthSignInRouteImport } from "./routes/auth/sign-in";
+import { Route as LayoutTestingRouteImport } from "./routes/_layout/testing";
+import { Route as LayoutSettingsRouteImport } from "./routes/_layout/settings";
+import { Route as LayoutProductsRouteImport } from "./routes/_layout/products";
+import { Route as LayoutOnboardingRouteImport } from "./routes/_layout/onboarding";
+import { Route as LayoutDemoRouteImport } from "./routes/_layout/demo";
+import { Route as LayoutCheckoutRouteImport } from "./routes/_layout/checkout";
+import { Route as LayoutSettingsSecurityRouteImport } from "./routes/_layout/settings/security";
+import { Route as LayoutSettingsNotificationsRouteImport } from "./routes/_layout/settings/notifications";
+import { Route as LayoutSettingsAddressesRouteImport } from "./routes/_layout/settings/addresses";
+import { Route as LayoutSettingsAccountRouteImport } from "./routes/_layout/settings/account";
+import { Route as LayoutSellNewListingRouteImport } from "./routes/_layout/sell/new-listing";
+import { Route as LayoutSellCreateListingRouteImport } from "./routes/_layout/sell/create-listing";
+import { Route as LayoutListingIdRouteImport } from "./routes/_layout/listing/$id";
+import { Route as LayoutSettingsAccountProvidersRouteImport } from "./routes/_layout/settings/account.providers";
+import { Route as LayoutSettingsAccountProfileRouteImport } from "./routes/_layout/settings/account.profile";
+import { Route as LayoutSettingsAccountPasswordRouteImport } from "./routes/_layout/settings/account.password";
 
-const LayoutIndexLazyRouteImport = createFileRoute('/_layout/')()
+const LayoutIndexLazyRouteImport = createFileRoute("/_layout/")();
 
 const ChatRoute = ChatRouteImport.update({
-  id: '/chat',
-  path: '/chat',
+  id: "/chat",
+  path: "/chat",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
+  id: "/auth",
+  path: "/auth",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const LayoutRoute = LayoutRouteImport.update({
-  id: '/_layout',
+  id: "/_layout",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const LayoutIndexLazyRoute = LayoutIndexLazyRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => LayoutRoute,
-} as any).lazy(() => import('./routes/_layout/index.lazy').then((d) => d.Route))
+} as any).lazy(() =>
+  import("./routes/_layout/index.lazy").then((d) => d.Route),
+);
 const AuthVerifyRoute = AuthVerifyRouteImport.update({
-  id: '/verify',
-  path: '/verify',
+  id: "/verify",
+  path: "/verify",
   getParentRoute: () => AuthRoute,
-} as any)
+} as any);
 const AuthSignInRoute = AuthSignInRouteImport.update({
-  id: '/sign-in',
-  path: '/sign-in',
+  id: "/sign-in",
+  path: "/sign-in",
   getParentRoute: () => AuthRoute,
-} as any)
+} as any);
 const LayoutTestingRoute = LayoutTestingRouteImport.update({
-  id: '/testing',
-  path: '/testing',
+  id: "/testing",
+  path: "/testing",
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 const LayoutSettingsRoute = LayoutSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
+  id: "/settings",
+  path: "/settings",
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 const LayoutProductsRoute = LayoutProductsRouteImport.update({
-  id: '/products',
-  path: '/products',
+  id: "/products",
+  path: "/products",
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 const LayoutOnboardingRoute = LayoutOnboardingRouteImport.update({
-  id: '/onboarding',
-  path: '/onboarding',
+  id: "/onboarding",
+  path: "/onboarding",
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 const LayoutDemoRoute = LayoutDemoRouteImport.update({
-  id: '/demo',
-  path: '/demo',
+  id: "/demo",
+  path: "/demo",
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 const LayoutCheckoutRoute = LayoutCheckoutRouteImport.update({
-  id: '/checkout',
-  path: '/checkout',
+  id: "/checkout",
+  path: "/checkout",
   getParentRoute: () => LayoutRoute,
-} as any)
-const LayoutSettingsAddressesRoute = LayoutSettingsAddressesRouteImport.update({
-  id: '/addresses',
-  path: '/addresses',
+} as any);
+const LayoutSettingsSecurityRoute = LayoutSettingsSecurityRouteImport.update({
+  id: "/security",
+  path: "/security",
   getParentRoute: () => LayoutSettingsRoute,
-} as any)
+} as any);
+const LayoutSettingsNotificationsRoute =
+  LayoutSettingsNotificationsRouteImport.update({
+    id: "/notifications",
+    path: "/notifications",
+    getParentRoute: () => LayoutSettingsRoute,
+  } as any);
+const LayoutSettingsAddressesRoute = LayoutSettingsAddressesRouteImport.update({
+  id: "/addresses",
+  path: "/addresses",
+  getParentRoute: () => LayoutSettingsRoute,
+} as any);
+const LayoutSettingsAccountRoute = LayoutSettingsAccountRouteImport.update({
+  id: "/account",
+  path: "/account",
+  getParentRoute: () => LayoutSettingsRoute,
+} as any);
 const LayoutSellNewListingRoute = LayoutSellNewListingRouteImport.update({
-  id: '/sell/new-listing',
-  path: '/sell/new-listing',
+  id: "/sell/new-listing",
+  path: "/sell/new-listing",
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 const LayoutSellCreateListingRoute = LayoutSellCreateListingRouteImport.update({
-  id: '/sell/create-listing',
-  path: '/sell/create-listing',
+  id: "/sell/create-listing",
+  path: "/sell/create-listing",
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
 const LayoutListingIdRoute = LayoutListingIdRouteImport.update({
-  id: '/listing/$id',
-  path: '/listing/$id',
+  id: "/listing/$id",
+  path: "/listing/$id",
   getParentRoute: () => LayoutRoute,
-} as any)
+} as any);
+const LayoutSettingsAccountProvidersRoute =
+  LayoutSettingsAccountProvidersRouteImport.update({
+    id: "/providers",
+    path: "/providers",
+    getParentRoute: () => LayoutSettingsAccountRoute,
+  } as any);
+const LayoutSettingsAccountProfileRoute =
+  LayoutSettingsAccountProfileRouteImport.update({
+    id: "/profile",
+    path: "/profile",
+    getParentRoute: () => LayoutSettingsAccountRoute,
+  } as any);
+const LayoutSettingsAccountPasswordRoute =
+  LayoutSettingsAccountPasswordRouteImport.update({
+    id: "/password",
+    path: "/password",
+    getParentRoute: () => LayoutSettingsAccountRoute,
+  } as any);
 
 export interface FileRoutesByFullPath {
-  '/auth': typeof AuthRouteWithChildren
-  '/chat': typeof ChatRoute
-  '/checkout': typeof LayoutCheckoutRoute
-  '/demo': typeof LayoutDemoRoute
-  '/onboarding': typeof LayoutOnboardingRoute
-  '/products': typeof LayoutProductsRoute
-  '/settings': typeof LayoutSettingsRouteWithChildren
-  '/testing': typeof LayoutTestingRoute
-  '/auth/sign-in': typeof AuthSignInRoute
-  '/auth/verify': typeof AuthVerifyRoute
-  '/': typeof LayoutIndexLazyRoute
-  '/listing/$id': typeof LayoutListingIdRoute
-  '/sell/create-listing': typeof LayoutSellCreateListingRoute
-  '/sell/new-listing': typeof LayoutSellNewListingRoute
-  '/settings/addresses': typeof LayoutSettingsAddressesRoute
+  "/auth": typeof AuthRouteWithChildren;
+  "/chat": typeof ChatRoute;
+  "/checkout": typeof LayoutCheckoutRoute;
+  "/demo": typeof LayoutDemoRoute;
+  "/onboarding": typeof LayoutOnboardingRoute;
+  "/products": typeof LayoutProductsRoute;
+  "/settings": typeof LayoutSettingsRouteWithChildren;
+  "/testing": typeof LayoutTestingRoute;
+  "/auth/sign-in": typeof AuthSignInRoute;
+  "/auth/verify": typeof AuthVerifyRoute;
+  "/": typeof LayoutIndexLazyRoute;
+  "/listing/$id": typeof LayoutListingIdRoute;
+  "/sell/create-listing": typeof LayoutSellCreateListingRoute;
+  "/sell/new-listing": typeof LayoutSellNewListingRoute;
+  "/settings/account": typeof LayoutSettingsAccountRouteWithChildren;
+  "/settings/addresses": typeof LayoutSettingsAddressesRoute;
+  "/settings/notifications": typeof LayoutSettingsNotificationsRoute;
+  "/settings/security": typeof LayoutSettingsSecurityRoute;
+  "/settings/account/password": typeof LayoutSettingsAccountPasswordRoute;
+  "/settings/account/profile": typeof LayoutSettingsAccountProfileRoute;
+  "/settings/account/providers": typeof LayoutSettingsAccountProvidersRoute;
 }
 export interface FileRoutesByTo {
-  '/auth': typeof AuthRouteWithChildren
-  '/chat': typeof ChatRoute
-  '/checkout': typeof LayoutCheckoutRoute
-  '/demo': typeof LayoutDemoRoute
-  '/onboarding': typeof LayoutOnboardingRoute
-  '/products': typeof LayoutProductsRoute
-  '/settings': typeof LayoutSettingsRouteWithChildren
-  '/testing': typeof LayoutTestingRoute
-  '/auth/sign-in': typeof AuthSignInRoute
-  '/auth/verify': typeof AuthVerifyRoute
-  '/': typeof LayoutIndexLazyRoute
-  '/listing/$id': typeof LayoutListingIdRoute
-  '/sell/create-listing': typeof LayoutSellCreateListingRoute
-  '/sell/new-listing': typeof LayoutSellNewListingRoute
-  '/settings/addresses': typeof LayoutSettingsAddressesRoute
+  "/auth": typeof AuthRouteWithChildren;
+  "/chat": typeof ChatRoute;
+  "/checkout": typeof LayoutCheckoutRoute;
+  "/demo": typeof LayoutDemoRoute;
+  "/onboarding": typeof LayoutOnboardingRoute;
+  "/products": typeof LayoutProductsRoute;
+  "/settings": typeof LayoutSettingsRouteWithChildren;
+  "/testing": typeof LayoutTestingRoute;
+  "/auth/sign-in": typeof AuthSignInRoute;
+  "/auth/verify": typeof AuthVerifyRoute;
+  "/": typeof LayoutIndexLazyRoute;
+  "/listing/$id": typeof LayoutListingIdRoute;
+  "/sell/create-listing": typeof LayoutSellCreateListingRoute;
+  "/sell/new-listing": typeof LayoutSellNewListingRoute;
+  "/settings/account": typeof LayoutSettingsAccountRouteWithChildren;
+  "/settings/addresses": typeof LayoutSettingsAddressesRoute;
+  "/settings/notifications": typeof LayoutSettingsNotificationsRoute;
+  "/settings/security": typeof LayoutSettingsSecurityRoute;
+  "/settings/account/password": typeof LayoutSettingsAccountPasswordRoute;
+  "/settings/account/profile": typeof LayoutSettingsAccountProfileRoute;
+  "/settings/account/providers": typeof LayoutSettingsAccountProvidersRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/_layout': typeof LayoutRouteWithChildren
-  '/auth': typeof AuthRouteWithChildren
-  '/chat': typeof ChatRoute
-  '/_layout/checkout': typeof LayoutCheckoutRoute
-  '/_layout/demo': typeof LayoutDemoRoute
-  '/_layout/onboarding': typeof LayoutOnboardingRoute
-  '/_layout/products': typeof LayoutProductsRoute
-  '/_layout/settings': typeof LayoutSettingsRouteWithChildren
-  '/_layout/testing': typeof LayoutTestingRoute
-  '/auth/sign-in': typeof AuthSignInRoute
-  '/auth/verify': typeof AuthVerifyRoute
-  '/_layout/': typeof LayoutIndexLazyRoute
-  '/_layout/listing/$id': typeof LayoutListingIdRoute
-  '/_layout/sell/create-listing': typeof LayoutSellCreateListingRoute
-  '/_layout/sell/new-listing': typeof LayoutSellNewListingRoute
-  '/_layout/settings/addresses': typeof LayoutSettingsAddressesRoute
+  __root__: typeof rootRouteImport;
+  "/_layout": typeof LayoutRouteWithChildren;
+  "/auth": typeof AuthRouteWithChildren;
+  "/chat": typeof ChatRoute;
+  "/_layout/checkout": typeof LayoutCheckoutRoute;
+  "/_layout/demo": typeof LayoutDemoRoute;
+  "/_layout/onboarding": typeof LayoutOnboardingRoute;
+  "/_layout/products": typeof LayoutProductsRoute;
+  "/_layout/settings": typeof LayoutSettingsRouteWithChildren;
+  "/_layout/testing": typeof LayoutTestingRoute;
+  "/auth/sign-in": typeof AuthSignInRoute;
+  "/auth/verify": typeof AuthVerifyRoute;
+  "/_layout/": typeof LayoutIndexLazyRoute;
+  "/_layout/listing/$id": typeof LayoutListingIdRoute;
+  "/_layout/sell/create-listing": typeof LayoutSellCreateListingRoute;
+  "/_layout/sell/new-listing": typeof LayoutSellNewListingRoute;
+  "/_layout/settings/account": typeof LayoutSettingsAccountRouteWithChildren;
+  "/_layout/settings/addresses": typeof LayoutSettingsAddressesRoute;
+  "/_layout/settings/notifications": typeof LayoutSettingsNotificationsRoute;
+  "/_layout/settings/security": typeof LayoutSettingsSecurityRoute;
+  "/_layout/settings/account/password": typeof LayoutSettingsAccountPasswordRoute;
+  "/_layout/settings/account/profile": typeof LayoutSettingsAccountProfileRoute;
+  "/_layout/settings/account/providers": typeof LayoutSettingsAccountProvidersRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
-    | '/auth'
-    | '/chat'
-    | '/checkout'
-    | '/demo'
-    | '/onboarding'
-    | '/products'
-    | '/settings'
-    | '/testing'
-    | '/auth/sign-in'
-    | '/auth/verify'
-    | '/'
-    | '/listing/$id'
-    | '/sell/create-listing'
-    | '/sell/new-listing'
-    | '/settings/addresses'
-  fileRoutesByTo: FileRoutesByTo
+    | "/auth"
+    | "/chat"
+    | "/checkout"
+    | "/demo"
+    | "/onboarding"
+    | "/products"
+    | "/settings"
+    | "/testing"
+    | "/auth/sign-in"
+    | "/auth/verify"
+    | "/"
+    | "/listing/$id"
+    | "/sell/create-listing"
+    | "/sell/new-listing"
+    | "/settings/account"
+    | "/settings/addresses"
+    | "/settings/notifications"
+    | "/settings/security"
+    | "/settings/account/password"
+    | "/settings/account/profile"
+    | "/settings/account/providers";
+  fileRoutesByTo: FileRoutesByTo;
   to:
-    | '/auth'
-    | '/chat'
-    | '/checkout'
-    | '/demo'
-    | '/onboarding'
-    | '/products'
-    | '/settings'
-    | '/testing'
-    | '/auth/sign-in'
-    | '/auth/verify'
-    | '/'
-    | '/listing/$id'
-    | '/sell/create-listing'
-    | '/sell/new-listing'
-    | '/settings/addresses'
+    | "/auth"
+    | "/chat"
+    | "/checkout"
+    | "/demo"
+    | "/onboarding"
+    | "/products"
+    | "/settings"
+    | "/testing"
+    | "/auth/sign-in"
+    | "/auth/verify"
+    | "/"
+    | "/listing/$id"
+    | "/sell/create-listing"
+    | "/sell/new-listing"
+    | "/settings/account"
+    | "/settings/addresses"
+    | "/settings/notifications"
+    | "/settings/security"
+    | "/settings/account/password"
+    | "/settings/account/profile"
+    | "/settings/account/providers";
   id:
-    | '__root__'
-    | '/_layout'
-    | '/auth'
-    | '/chat'
-    | '/_layout/checkout'
-    | '/_layout/demo'
-    | '/_layout/onboarding'
-    | '/_layout/products'
-    | '/_layout/settings'
-    | '/_layout/testing'
-    | '/auth/sign-in'
-    | '/auth/verify'
-    | '/_layout/'
-    | '/_layout/listing/$id'
-    | '/_layout/sell/create-listing'
-    | '/_layout/sell/new-listing'
-    | '/_layout/settings/addresses'
-  fileRoutesById: FileRoutesById
+    | "__root__"
+    | "/_layout"
+    | "/auth"
+    | "/chat"
+    | "/_layout/checkout"
+    | "/_layout/demo"
+    | "/_layout/onboarding"
+    | "/_layout/products"
+    | "/_layout/settings"
+    | "/_layout/testing"
+    | "/auth/sign-in"
+    | "/auth/verify"
+    | "/_layout/"
+    | "/_layout/listing/$id"
+    | "/_layout/sell/create-listing"
+    | "/_layout/sell/new-listing"
+    | "/_layout/settings/account"
+    | "/_layout/settings/addresses"
+    | "/_layout/settings/notifications"
+    | "/_layout/settings/security"
+    | "/_layout/settings/account/password"
+    | "/_layout/settings/account/profile"
+    | "/_layout/settings/account/providers";
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  LayoutRoute: typeof LayoutRouteWithChildren
-  AuthRoute: typeof AuthRouteWithChildren
-  ChatRoute: typeof ChatRoute
+  LayoutRoute: typeof LayoutRouteWithChildren;
+  AuthRoute: typeof AuthRouteWithChildren;
+  ChatRoute: typeof ChatRoute;
 }
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/chat': {
-      id: '/chat'
-      path: '/chat'
-      fullPath: '/chat'
-      preLoaderRoute: typeof ChatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_layout': {
-      id: '/_layout'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof LayoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_layout/': {
-      id: '/_layout/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof LayoutIndexLazyRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/auth/verify': {
-      id: '/auth/verify'
-      path: '/verify'
-      fullPath: '/auth/verify'
-      preLoaderRoute: typeof AuthVerifyRouteImport
-      parentRoute: typeof AuthRoute
-    }
-    '/auth/sign-in': {
-      id: '/auth/sign-in'
-      path: '/sign-in'
-      fullPath: '/auth/sign-in'
-      preLoaderRoute: typeof AuthSignInRouteImport
-      parentRoute: typeof AuthRoute
-    }
-    '/_layout/testing': {
-      id: '/_layout/testing'
-      path: '/testing'
-      fullPath: '/testing'
-      preLoaderRoute: typeof LayoutTestingRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/settings': {
-      id: '/_layout/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof LayoutSettingsRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/products': {
-      id: '/_layout/products'
-      path: '/products'
-      fullPath: '/products'
-      preLoaderRoute: typeof LayoutProductsRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/onboarding': {
-      id: '/_layout/onboarding'
-      path: '/onboarding'
-      fullPath: '/onboarding'
-      preLoaderRoute: typeof LayoutOnboardingRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/demo': {
-      id: '/_layout/demo'
-      path: '/demo'
-      fullPath: '/demo'
-      preLoaderRoute: typeof LayoutDemoRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/checkout': {
-      id: '/_layout/checkout'
-      path: '/checkout'
-      fullPath: '/checkout'
-      preLoaderRoute: typeof LayoutCheckoutRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/settings/addresses': {
-      id: '/_layout/settings/addresses'
-      path: '/addresses'
-      fullPath: '/settings/addresses'
-      preLoaderRoute: typeof LayoutSettingsAddressesRouteImport
-      parentRoute: typeof LayoutSettingsRoute
-    }
-    '/_layout/sell/new-listing': {
-      id: '/_layout/sell/new-listing'
-      path: '/sell/new-listing'
-      fullPath: '/sell/new-listing'
-      preLoaderRoute: typeof LayoutSellNewListingRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/sell/create-listing': {
-      id: '/_layout/sell/create-listing'
-      path: '/sell/create-listing'
-      fullPath: '/sell/create-listing'
-      preLoaderRoute: typeof LayoutSellCreateListingRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/listing/$id': {
-      id: '/_layout/listing/$id'
-      path: '/listing/$id'
-      fullPath: '/listing/$id'
-      preLoaderRoute: typeof LayoutListingIdRouteImport
-      parentRoute: typeof LayoutRoute
-    }
+    "/chat": {
+      id: "/chat";
+      path: "/chat";
+      fullPath: "/chat";
+      preLoaderRoute: typeof ChatRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/auth": {
+      id: "/auth";
+      path: "/auth";
+      fullPath: "/auth";
+      preLoaderRoute: typeof AuthRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/_layout": {
+      id: "/_layout";
+      path: "";
+      fullPath: "";
+      preLoaderRoute: typeof LayoutRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/_layout/": {
+      id: "/_layout/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof LayoutIndexLazyRouteImport;
+      parentRoute: typeof LayoutRoute;
+    };
+    "/auth/verify": {
+      id: "/auth/verify";
+      path: "/verify";
+      fullPath: "/auth/verify";
+      preLoaderRoute: typeof AuthVerifyRouteImport;
+      parentRoute: typeof AuthRoute;
+    };
+    "/auth/sign-in": {
+      id: "/auth/sign-in";
+      path: "/sign-in";
+      fullPath: "/auth/sign-in";
+      preLoaderRoute: typeof AuthSignInRouteImport;
+      parentRoute: typeof AuthRoute;
+    };
+    "/_layout/testing": {
+      id: "/_layout/testing";
+      path: "/testing";
+      fullPath: "/testing";
+      preLoaderRoute: typeof LayoutTestingRouteImport;
+      parentRoute: typeof LayoutRoute;
+    };
+    "/_layout/settings": {
+      id: "/_layout/settings";
+      path: "/settings";
+      fullPath: "/settings";
+      preLoaderRoute: typeof LayoutSettingsRouteImport;
+      parentRoute: typeof LayoutRoute;
+    };
+    "/_layout/products": {
+      id: "/_layout/products";
+      path: "/products";
+      fullPath: "/products";
+      preLoaderRoute: typeof LayoutProductsRouteImport;
+      parentRoute: typeof LayoutRoute;
+    };
+    "/_layout/onboarding": {
+      id: "/_layout/onboarding";
+      path: "/onboarding";
+      fullPath: "/onboarding";
+      preLoaderRoute: typeof LayoutOnboardingRouteImport;
+      parentRoute: typeof LayoutRoute;
+    };
+    "/_layout/demo": {
+      id: "/_layout/demo";
+      path: "/demo";
+      fullPath: "/demo";
+      preLoaderRoute: typeof LayoutDemoRouteImport;
+      parentRoute: typeof LayoutRoute;
+    };
+    "/_layout/checkout": {
+      id: "/_layout/checkout";
+      path: "/checkout";
+      fullPath: "/checkout";
+      preLoaderRoute: typeof LayoutCheckoutRouteImport;
+      parentRoute: typeof LayoutRoute;
+    };
+    "/_layout/settings/security": {
+      id: "/_layout/settings/security";
+      path: "/security";
+      fullPath: "/settings/security";
+      preLoaderRoute: typeof LayoutSettingsSecurityRouteImport;
+      parentRoute: typeof LayoutSettingsRoute;
+    };
+    "/_layout/settings/notifications": {
+      id: "/_layout/settings/notifications";
+      path: "/notifications";
+      fullPath: "/settings/notifications";
+      preLoaderRoute: typeof LayoutSettingsNotificationsRouteImport;
+      parentRoute: typeof LayoutSettingsRoute;
+    };
+    "/_layout/settings/addresses": {
+      id: "/_layout/settings/addresses";
+      path: "/addresses";
+      fullPath: "/settings/addresses";
+      preLoaderRoute: typeof LayoutSettingsAddressesRouteImport;
+      parentRoute: typeof LayoutSettingsRoute;
+    };
+    "/_layout/settings/account": {
+      id: "/_layout/settings/account";
+      path: "/account";
+      fullPath: "/settings/account";
+      preLoaderRoute: typeof LayoutSettingsAccountRouteImport;
+      parentRoute: typeof LayoutSettingsRoute;
+    };
+    "/_layout/sell/new-listing": {
+      id: "/_layout/sell/new-listing";
+      path: "/sell/new-listing";
+      fullPath: "/sell/new-listing";
+      preLoaderRoute: typeof LayoutSellNewListingRouteImport;
+      parentRoute: typeof LayoutRoute;
+    };
+    "/_layout/sell/create-listing": {
+      id: "/_layout/sell/create-listing";
+      path: "/sell/create-listing";
+      fullPath: "/sell/create-listing";
+      preLoaderRoute: typeof LayoutSellCreateListingRouteImport;
+      parentRoute: typeof LayoutRoute;
+    };
+    "/_layout/listing/$id": {
+      id: "/_layout/listing/$id";
+      path: "/listing/$id";
+      fullPath: "/listing/$id";
+      preLoaderRoute: typeof LayoutListingIdRouteImport;
+      parentRoute: typeof LayoutRoute;
+    };
+    "/_layout/settings/account/providers": {
+      id: "/_layout/settings/account/providers";
+      path: "/providers";
+      fullPath: "/settings/account/providers";
+      preLoaderRoute: typeof LayoutSettingsAccountProvidersRouteImport;
+      parentRoute: typeof LayoutSettingsAccountRoute;
+    };
+    "/_layout/settings/account/profile": {
+      id: "/_layout/settings/account/profile";
+      path: "/profile";
+      fullPath: "/settings/account/profile";
+      preLoaderRoute: typeof LayoutSettingsAccountProfileRouteImport;
+      parentRoute: typeof LayoutSettingsAccountRoute;
+    };
+    "/_layout/settings/account/password": {
+      id: "/_layout/settings/account/password";
+      path: "/password";
+      fullPath: "/settings/account/password";
+      preLoaderRoute: typeof LayoutSettingsAccountPasswordRouteImport;
+      parentRoute: typeof LayoutSettingsAccountRoute;
+    };
   }
 }
 
+interface LayoutSettingsAccountRouteChildren {
+  LayoutSettingsAccountPasswordRoute: typeof LayoutSettingsAccountPasswordRoute;
+  LayoutSettingsAccountProfileRoute: typeof LayoutSettingsAccountProfileRoute;
+  LayoutSettingsAccountProvidersRoute: typeof LayoutSettingsAccountProvidersRoute;
+}
+
+const LayoutSettingsAccountRouteChildren: LayoutSettingsAccountRouteChildren = {
+  LayoutSettingsAccountPasswordRoute: LayoutSettingsAccountPasswordRoute,
+  LayoutSettingsAccountProfileRoute: LayoutSettingsAccountProfileRoute,
+  LayoutSettingsAccountProvidersRoute: LayoutSettingsAccountProvidersRoute,
+};
+
+const LayoutSettingsAccountRouteWithChildren =
+  LayoutSettingsAccountRoute._addFileChildren(
+    LayoutSettingsAccountRouteChildren,
+  );
+
 interface LayoutSettingsRouteChildren {
-  LayoutSettingsAddressesRoute: typeof LayoutSettingsAddressesRoute
+  LayoutSettingsAccountRoute: typeof LayoutSettingsAccountRouteWithChildren;
+  LayoutSettingsAddressesRoute: typeof LayoutSettingsAddressesRoute;
+  LayoutSettingsNotificationsRoute: typeof LayoutSettingsNotificationsRoute;
+  LayoutSettingsSecurityRoute: typeof LayoutSettingsSecurityRoute;
 }
 
 const LayoutSettingsRouteChildren: LayoutSettingsRouteChildren = {
+  LayoutSettingsAccountRoute: LayoutSettingsAccountRouteWithChildren,
   LayoutSettingsAddressesRoute: LayoutSettingsAddressesRoute,
-}
+  LayoutSettingsNotificationsRoute: LayoutSettingsNotificationsRoute,
+  LayoutSettingsSecurityRoute: LayoutSettingsSecurityRoute,
+};
 
 const LayoutSettingsRouteWithChildren = LayoutSettingsRoute._addFileChildren(
   LayoutSettingsRouteChildren,
-)
+);
 
 interface LayoutRouteChildren {
-  LayoutCheckoutRoute: typeof LayoutCheckoutRoute
-  LayoutDemoRoute: typeof LayoutDemoRoute
-  LayoutOnboardingRoute: typeof LayoutOnboardingRoute
-  LayoutProductsRoute: typeof LayoutProductsRoute
-  LayoutSettingsRoute: typeof LayoutSettingsRouteWithChildren
-  LayoutTestingRoute: typeof LayoutTestingRoute
-  LayoutIndexLazyRoute: typeof LayoutIndexLazyRoute
-  LayoutListingIdRoute: typeof LayoutListingIdRoute
-  LayoutSellCreateListingRoute: typeof LayoutSellCreateListingRoute
-  LayoutSellNewListingRoute: typeof LayoutSellNewListingRoute
+  LayoutCheckoutRoute: typeof LayoutCheckoutRoute;
+  LayoutDemoRoute: typeof LayoutDemoRoute;
+  LayoutOnboardingRoute: typeof LayoutOnboardingRoute;
+  LayoutProductsRoute: typeof LayoutProductsRoute;
+  LayoutSettingsRoute: typeof LayoutSettingsRouteWithChildren;
+  LayoutTestingRoute: typeof LayoutTestingRoute;
+  LayoutIndexLazyRoute: typeof LayoutIndexLazyRoute;
+  LayoutListingIdRoute: typeof LayoutListingIdRoute;
+  LayoutSellCreateListingRoute: typeof LayoutSellCreateListingRoute;
+  LayoutSellNewListingRoute: typeof LayoutSellNewListingRoute;
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
@@ -376,28 +519,28 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutListingIdRoute: LayoutListingIdRoute,
   LayoutSellCreateListingRoute: LayoutSellCreateListingRoute,
   LayoutSellNewListingRoute: LayoutSellNewListingRoute,
-}
+};
 
 const LayoutRouteWithChildren =
-  LayoutRoute._addFileChildren(LayoutRouteChildren)
+  LayoutRoute._addFileChildren(LayoutRouteChildren);
 
 interface AuthRouteChildren {
-  AuthSignInRoute: typeof AuthSignInRoute
-  AuthVerifyRoute: typeof AuthVerifyRoute
+  AuthSignInRoute: typeof AuthSignInRoute;
+  AuthVerifyRoute: typeof AuthVerifyRoute;
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthSignInRoute: AuthSignInRoute,
   AuthVerifyRoute: AuthVerifyRoute,
-}
+};
 
-const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren);
 
 const rootRouteChildren: RootRouteChildren = {
   LayoutRoute: LayoutRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
   ChatRoute: ChatRoute,
-}
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
